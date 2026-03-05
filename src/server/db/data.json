@@ -1,0 +1,1974 @@
+[
+  {
+    "name": "ACCENT",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "ACCORD",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "DARK GREY",
+      "ECRUE",
+      "GREY",
+      "SAND",
+      "STORM"
+    ]
+  },
+  {
+    "name": "ACOUSTIC",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "SMOKE"
+    ]
+  },
+  {
+    "name": "ALTO",
+    "colors": [
+      "ECRUE",
+      "GREY",
+      "DARK GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "ANCONA",
+    "colors": [
+      "CREAM",
+      "MINK"
+    ]
+  },
+  {
+    "name": "ARYA",
+    "colors": [
+      "BEIGE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "ASOS",
+    "colors": [
+      "CREAM",
+      "CHICKPEA",
+      "POWDER"
+    ]
+  },
+  {
+    "name": "AVANGARD",
+    "colors": [
+      "ECRUE",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "BAMBOO",
+    "colors": [
+      "ANTHRACITE",
+      "GREY",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "BANGKOK",
+    "colors": [
+      "ANTHRACITE",
+      "SMOKED",
+      "GREY",
+      "NAVY BLUE",
+      "SUTLU KAHVE",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "BARITONE",
+    "colors": [
+      "S BROWN",
+      "ANTHRACITE",
+      "BEIGE",
+      "BROWN",
+      "CREAM",
+      "GREY",
+      "MINK",
+      "NAVY BLUE",
+      "OLIVE DRAP"
+    ]
+  },
+  {
+    "name": "BINGO",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "BOLERO",
+    "colors": [
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "BRESCIA ",
+    "colors": [
+      "ANTHRACITE",
+      "BAROQUE",
+      "BLACK",
+      "CREAM",
+      "GOLD",
+      "GREY",
+      "MINK",
+      "PETROLEUM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "CAHANSON",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "MINK",
+      "STONE"
+    ]
+  },
+  {
+    "name": "CANON",
+    "colors": [
+      "BEIGE",
+      "BLACK",
+      "ECRUE",
+      "GREY",
+      "LAND",
+      "MINK",
+      "STONE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "CANTO",
+    "colors": [
+      "ECRUE",
+      "GREY",
+      "DARK GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "CAPPELA",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "BLACK",
+      "BROWN",
+      "CREAM",
+      "DARK BLUE",
+      "GOLD",
+      "GREY",
+      "INDIGO",
+      "MILKY BROWN",
+      "MINK",
+      "NAVY BLUE",
+      "SILVER",
+      "SMOKED",
+      "STONE",
+      "STORM"
+    ]
+  },
+  {
+    "name": "CASENA",
+    "colors": [
+      "ECRUE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "CENOVA",
+    "colors": [
+      "BEIGE",
+      "ECRUE",
+      "GREY",
+      "STONE"
+    ]
+  },
+  {
+    "name": "CHORD",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STORM"
+    ]
+  },
+  {
+    "name": "CONCERTO",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "GOLD",
+      "GREY",
+      "MINK",
+      "S BROWN",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "DIMI BLACKOUT",
+    "colors": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25"
+    ]
+  },
+  {
+    "name": "DOLCE",
+    "colors": [
+      "GOLD",
+      "ANTHRACITE",
+      "ECRUE",
+      "CREAM",
+      "NAVY BLUE",
+      "BLACK"
+    ]
+  },
+  {
+    "name": "DUET",
+    "colors": [
+      "BEIGE",
+      "BROWN",
+      "GREY",
+      "SAND",
+      "SMOKED",
+      "STORM"
+    ]
+  },
+  {
+    "name": "EFE",
+    "colors": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49"
+    ]
+  },
+  {
+    "name": "FILE",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "FINE",
+    "colors": [
+      "ANTHRACITE",
+      "GREY",
+      "MINK",
+      "SMOKED",
+      "STONE"
+    ]
+  },
+  {
+    "name": "FLAT",
+    "colors": [
+      "BEIGE",
+      "BLUE",
+      "CREAM",
+      "GREY",
+      "SMOKE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "FLORANSA",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STONE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "FLORIDA",
+    "colors": [
+      "GOLD",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "FLUENCE",
+    "colors": [
+      "ECRUE",
+      "CREAM",
+      "CHICKPEA",
+      "STONE"
+    ]
+  },
+  {
+    "name": "FLUX",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "FORTE",
+    "colors": [
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "HALLEY",
+    "colors": [
+      "ANTHRACITE",
+      "BLUE",
+      "BROWN",
+      "CREAM",
+      "DARK BROWN",
+      "DARK GREY",
+      "ECRUE",
+      "GREY",
+      "LATTE",
+      "MINT",
+      "MOCHA",
+      "MUSHROOM",
+      "NAVY BLUE",
+      "POWDER",
+      "SILVER",
+      "SMOKED",
+      "TILE"
+    ]
+  },
+  {
+    "name": "HAVANA",
+    "colors": [
+      "ANTHRACITE",
+      "SMOKED",
+      "GREY",
+      "NAVY BLUE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "HELENA",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "SMOKED",
+      "GREY",
+      "HARDAL",
+      "CREAM",
+      "NAVY BLUE",
+      "MURDUM",
+      "STONE",
+      "TURQUOISE"
+    ]
+  },
+  {
+    "name": "HERA",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY"
+    ]
+  },
+  {
+    "name": "HERRINGBONE",
+    "colors": [
+      "SMOKED",
+      "GREY",
+      "MURDUM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "INTRO",
+    "colors": [
+      "ANTHRACITE",
+      "BLUE",
+      "CREAM",
+      "GREY",
+      "MILKY BROWN",
+      "MINK",
+      "SMOKE"
+    ]
+  },
+  {
+    "name": "KALKAN",
+    "colors": [
+      "CREAM",
+      "CHICKPEA",
+      "POWDER"
+    ]
+  },
+  {
+    "name": "KANSAS",
+    "colors": [
+      "ANTHRACITE",
+      "ECRUE",
+      "SMOKED",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "KREP",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GOLD",
+      "POWDER",
+      "CHICKPEA",
+      "STONE"
+    ]
+  },
+  {
+    "name": "LAGUNA",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "LECCE",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "GREY",
+      "KAHVE",
+      "CREAM",
+      "NAVY BLUE",
+      "POWDER",
+      "TURQUOISE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "LEGATO",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "CREAM",
+      "GREY",
+      "MULBERRY",
+      "MUSTARD",
+      "NAVY BLUE",
+      "SMOKED",
+      "STONE",
+      "TURQUOISE"
+    ]
+  },
+  {
+    "name": "LIMA",
+    "colors": [
+      "V-1",
+      "V-2",
+      "V-3",
+      "V-4"
+    ]
+  },
+  {
+    "name": "LIVERPOOL",
+    "colors": [
+      "BRONZ",
+      "ECRUE",
+      "CREAM",
+      "BLUE",
+      "PURPLE",
+      "POWDER",
+      "GREEN",
+      "STEEL"
+    ]
+  },
+  {
+    "name": "LIZBON",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "GREY",
+      "KAHVE",
+      "CREAM",
+      "NAVY BLUE",
+      "POWDER",
+      "TURQUOISE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "MAJESTIK",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "CREAM",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "MALIBU",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "MALTA",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "CHICKPEA",
+      "MINK"
+    ]
+  },
+  {
+    "name": "MANILA",
+    "colors": [
+      "ANTHRACITE",
+      "SMOKED",
+      "GREY",
+      "NAVY BLUE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "MARS",
+    "colors": [
+      "ANTHRACITE",
+      "ANTIQUE",
+      "BEIGE",
+      "BLACK",
+      "BLUE",
+      "CAPPUCCINO",
+      "CHERRY",
+      "CHESTNUT",
+      "CHICKPEA",
+      "CHOCOLATE",
+      "COCONUT",
+      "CREAM",
+      "DARK BEIGE",
+      "DARK BLUE",
+      "DARK BROWN",
+      "DARK GREEN",
+      "DARK GREY",
+      "ECRUE",
+      "GREEN",
+      "GREY",
+      "LIGHT BLUE",
+      "LIGHT BROWN",
+      "LIGHT GREY",
+      "MINK",
+      "MINT",
+      "MUSTARD",
+      "OIL GREEN",
+      "ORANGE",
+      "PETROLEUM",
+      "POWDER",
+      "SALMON",
+      "SILVER",
+      "SMOKED",
+      "STONE",
+      "TEAL"
+    ]
+  },
+  {
+    "name": "MASAL",
+    "colors": [
+      "SILVER",
+      "SEDEF"
+    ]
+  },
+  {
+    "name": "MASSA",
+    "colors": [
+      "BLACK",
+      "BROWN",
+      "CREAM",
+      "DARK BROWN",
+      "GREY",
+      "MILKY BROWN",
+      "MINK",
+      "STONE"
+    ]
+  },
+  {
+    "name": "MESSINA",
+    "colors": [
+      "BEIGE",
+      "ECRUE",
+      "CREAM",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "MEZZO",
+    "colors": [
+      "ANTHRACITE",
+      "GREY",
+      "SILVER"
+    ]
+  },
+  {
+    "name": "MODENA",
+    "colors": [
+      "ANTHRACITE",
+      "ECRUE",
+      "GREY",
+      "SILVER",
+      "HARDAL",
+      "NAVY BLUE",
+      "GREEN"
+    ]
+  },
+  {
+    "name": "MONZA",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "MOON",
+    "colors": [
+      "ANTHRACITE",
+      "ANTIQUE",
+      "BEIGE",
+      "BITTER",
+      "BLACK",
+      "BROWN",
+      "CHERRY",
+      "CHESTNUT",
+      "COCONUT",
+      "COFFEE",
+      "CREAM",
+      "DARK BROWN",
+      "DARK GREEN",
+      "DARK GREY",
+      "ECRUE",
+      "GOLD",
+      "GREEN",
+      "GREY",
+      "LATTE",
+      "LIGHT GREY",
+      "MUSTARD",
+      "NAVY BLUE",
+      "OIL GREEN",
+      "ORANGE",
+      "PETROLEUM",
+      "POWDER",
+      "SILVER",
+      "SMOKED",
+      "STEEL",
+      "STONE"
+    ]
+  },
+  {
+    "name": "MUDANYA",
+    "colors": [
+      "ECRUE",
+      "GREY",
+      "KAHVE",
+      "CREAM",
+      "MURDUM",
+      "POWDER",
+      "BLACK",
+      "TURQUOISE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "NEON",
+    "colors": [
+      "BEIGE",
+      "ECRUE",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "NEPTUN",
+    "colors": [
+      "ANTIQUE",
+      "ANTHRACITE",
+      "BEIGE",
+      "BLACK",
+      "BLUE",
+      "BROWN",
+      "CAPPUCCINO",
+      "CHESTNUT",
+      "CHICKPEA",
+      "COOL GREY",
+      "CREAM",
+      "DARK BROWN",
+      "DARK GREEN",
+      "DARK GREY",
+      "ECRUE",
+      "GREEN",
+      "GREY",
+      "LIGHT GREY",
+      "MILKY BROWN",
+      "MINK",
+      "MUSTARD",
+      "NAVY BLUE",
+      "OLIVE GREEN",
+      "ORANGE",
+      "PETROLEUM",
+      "PISTACHIO",
+      "POWDER",
+      "PURPLE",
+      "ROSE",
+      "SILVER",
+      "SMOKED",
+      "STEEL",
+      "STONE"
+    ]
+  },
+  {
+    "name": "NEW YORK",
+    "colors": [
+      "ECRUE",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "NEWYORK",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "KAHVE",
+      "DARK GREY",
+      "CREAM",
+      "NAVY BLUE",
+      "LILA",
+      "POWDER",
+      "SARI",
+      "SUTLU KAHVE",
+      "STONE",
+      "TERRA COTA",
+      "TURQUOISE",
+      "MINK",
+      "YAG YESILI"
+    ]
+  },
+  {
+    "name": "NICE CREP",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STORM",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "NO HOLE",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STONE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "OCTAVE",
+    "colors": [
+      "STONE",
+      "BEIGE",
+      "BLACK",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "SAND",
+      "STORM",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "OSLO",
+    "colors": [
+      "GOLD",
+      "SMOKED",
+      "GREY",
+      "KIREMIT",
+      "NAVY BLUE",
+      "SARI"
+    ]
+  },
+  {
+    "name": "OYKU",
+    "colors": [
+      "SILVER",
+      "SEDEF"
+    ]
+  },
+  {
+    "name": "PARIS",
+    "colors": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "10",
+      "12",
+      "20",
+      "21"
+    ]
+  },
+  {
+    "name": "PARLAK KREP",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "POWDER"
+    ]
+  },
+  {
+    "name": "PARMA",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "GREY",
+      "KAHVE",
+      "CREAM",
+      "NAVY BLUE",
+      "POWDER",
+      "TURQUOISE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "PERA",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "PESCARA",
+    "colors": [
+      "GOLD",
+      "ECRUE",
+      "SILVER",
+      "CREAMA"
+    ]
+  },
+  {
+    "name": "PLANET",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "ROSE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "PLOVDIV",
+    "colors": [
+      "ANTHRACITE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "NAVY BLUE",
+      "BLUE",
+      "MURDUM",
+      "POWDER",
+      "BLACK",
+      "TURQUOISE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "PLUTON",
+    "colors": [
+      "BEIGE",
+      "BLACK",
+      "BROWN",
+      "CHOCOLATE",
+      "COCONUT",
+      "CREAM",
+      "DARK BEIGE",
+      "DARK BROWN",
+      "ECRUE",
+      "GREEN",
+      "GREY",
+      "LIGHT BROWN",
+      "MARINE",
+      "MINK BROWN",
+      "MOCHA",
+      "MUSTARD",
+      "OCEAN",
+      "OLIVE GREEN",
+      "POWDER",
+      "ROSE",
+      "SMOKED",
+      "STEEL",
+      "STONE"
+    ]
+  },
+  {
+    "name": "POLARIS",
+    "colors": [
+      "ANTHRACITE",
+      "ANTIQUE",
+      "BEIGE",
+      "BLACK",
+      "BLUE",
+      "BRICK",
+      "BROWN",
+      "CLOUD",
+      "CREAM",
+      "DARK BLUE",
+      "DARK BROWN",
+      "ECRUE",
+      "GHISA",
+      "GREY",
+      "MINK",
+      "NAVY BLUE",
+      "STONE",
+      "STORM"
+    ]
+  },
+  {
+    "name": "PORTOFINO",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "GREY",
+      "KAHVE",
+      "CREAM",
+      "NAVY BLUE",
+      "POWDER",
+      "TURQUOISE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "PRELUDE",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "CLOUD",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "RAIN",
+      "SAND",
+      "SMOKED",
+      "STONE",
+      "STORM",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "QUBA",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "QUBIK ZIRH",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "ECRUE",
+      "GOLD",
+      "GREY",
+      "CREAM",
+      "NAVY BLUE",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "REGULUS",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "BLACK",
+      "BROWN",
+      "COFFEE",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "MINK",
+      "NAVY BLUE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "RHYTHM",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "ECRUE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "RIGA",
+    "colors": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39"
+    ]
+  },
+  {
+    "name": "RIGA BLACKOUT",
+    "colors": [
+      "ACI KAHVE",
+      "ANTIQUE",
+      "ANTHRACITE",
+      "BEIGE",
+      "ECRUE",
+      "SMOKED",
+      "GREY",
+      "KAHVE",
+      "CREAM",
+      "KIREMIT",
+      "NAVY BLUE",
+      "CHICKPEA",
+      "POWDER",
+      "STONE",
+      "TURUNCU",
+      "MINK",
+      "GREEN"
+    ]
+  },
+  {
+    "name": "ROMEO",
+    "colors": [
+      "ANTHRACITE",
+      "ANTIQUE",
+      "LIGHT GREY",
+      "BEIGE",
+      "BRONZ",
+      "ECRUE",
+      "SMOKED",
+      "GREY",
+      "SILVER",
+      "HAKI",
+      "HARDAL",
+      "KAHVE",
+      "DARK GREY",
+      "DARK NAVY BLUE",
+      "DARK GREEN",
+      "CREAM",
+      "KIREMIT",
+      "NAVY BLUE",
+      "LILA",
+      "BLUE",
+      "MERCAN",
+      "OLIVE",
+      "PINK",
+      "SEDEF",
+      "SILVER",
+      "SU YESILI",
+      "SUTLU KAHVE",
+      "BLACK",
+      "TURQUOISE",
+      "GREEN",
+      "STEEL"
+    ]
+  },
+  {
+    "name": "SALSA",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "SASSARI",
+    "colors": [
+      "LIGHT GREY",
+      "ECRUE",
+      "DARK GREY",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "SCALE",
+    "colors": [
+      "ANTHRACITE",
+      "GREY",
+      "SMOKED",
+      "STONE"
+    ]
+  },
+  {
+    "name": "SEOUL",
+    "colors": [
+      "BEIGE",
+      "CREAM",
+      "DARK GREY",
+      "ECRUE",
+      "GREY",
+      "MINK",
+      "STONE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "SERIK",
+    "colors": [
+      "BEIGE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "SHINE",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY"
+    ]
+  },
+  {
+    "name": "SHINY STEEL",
+    "colors": [
+      "ECRUE",
+      "GOLD",
+      "SILVER",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "SILK KREP",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "STONE"
+    ]
+  },
+  {
+    "name": "SIMBA",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY"
+    ]
+  },
+  {
+    "name": "SIRIUS",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "BLACK",
+      "CREAM",
+      "DARK BEIGE",
+      "GREY",
+      "MILKY BROWN",
+      "MINK",
+      "NAVY BLUE"
+    ]
+  },
+  {
+    "name": "SOFTY",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STONE"
+    ]
+  },
+  {
+    "name": "SOLO",
+    "colors": [
+      "ACI KAHVE",
+      "BEIGE",
+      "ECRUE",
+      "KAHVE",
+      "CREAM",
+      "NAVY BLUE",
+      "SARI",
+      "TURQUOISE",
+      "MINK",
+      "GREEN",
+      "STONE"
+    ]
+  },
+  {
+    "name": "SPLIT",
+    "colors": [
+      "ANSTONEIT",
+      "BEIGE",
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "OKYANUS"
+    ]
+  },
+  {
+    "name": "STEEL",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STONE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "STOCKHOLM",
+    "colors": [
+      "ANTHRACITE",
+      "SMOKED",
+      "GREY",
+      "NAVY BLUE",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "SUN",
+    "colors": [
+      "BEIGE",
+      "BLACK",
+      "BLUE",
+      "BROWN",
+      "CREAM",
+      "DARK BLUE",
+      "DARK BROWN",
+      "ECRUE",
+      "GOLD",
+      "GOLD BLUE",
+      "GREY",
+      "MILKY BROWN",
+      "MINK",
+      "SILVER",
+      "SILVER BLUE",
+      "SMOKED"
+    ]
+  },
+  {
+    "name": "TARSUS",
+    "colors": [
+      "ANTHRACITE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "TETRA",
+    "colors": [
+      "BEIGE",
+      "ECRUE",
+      "CREAM",
+      "STONE"
+    ]
+  },
+  {
+    "name": "TEX BLACKOUT",
+    "colors": [
+      "ANTIQUE",
+      "ANTHRACITE",
+      "BEIGE",
+      "WHITE",
+      "GLASS",
+      "ECRUE",
+      "SMOKED",
+      "GREY",
+      "KAHVE",
+      "CAPPUCCINO",
+      "KESTANE",
+      "DARK GREY",
+      "DARK BLUE",
+      "CREAM",
+      "KIREMIT",
+      "NAVY BLUE",
+      "BLUE",
+      "POWDER",
+      "SILVER",
+      "BLACK",
+      "STONE",
+      "MINK",
+      "YAG YESILI",
+      "GREEN"
+    ]
+  },
+  {
+    "name": "TOLEDO",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "DARK GREY",
+      "CREAM",
+      "STONE",
+      "MINK"
+    ]
+  },
+  {
+    "name": "TOSCANA",
+    "colors": [
+      "CREAM",
+      "MINK"
+    ]
+  },
+  {
+    "name": "TUTTI",
+    "colors": [
+      "GOLD",
+      "BEIGE",
+      "GREY",
+      "SILVER"
+    ]
+  },
+  {
+    "name": "UDINESE",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "WHITE",
+      "CAPPUCCINO",
+      "CHESTNUT",
+      "CLOUD",
+      "COFFEE",
+      "CREAM",
+      "DARK BEIGE",
+      "DARK BROWN",
+      "FIG",
+      "GREEN",
+      "JEAN",
+      "JUNIPER",
+      "LATTE",
+      "MILK",
+      "MILKY BROWN",
+      "MINK",
+      "MUSTARD",
+      "NAVY BLUE",
+      "OCEAN",
+      "PINK",
+      "POWDER",
+      "RAIN",
+      "SALMON",
+      "SMOKED",
+      "STONE",
+      "STORM"
+    ]
+  },
+  {
+    "name": "ULUDA\u011e",
+    "colors": [
+      "GOLD",
+      "GREY",
+      "NAVY BLUE",
+      "BLUE",
+      "TURQUOISE"
+    ]
+  },
+  {
+    "name": "VALENCIA",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "BRONZ",
+      "ECRUE",
+      "SMOKED",
+      "GREY",
+      "CREAM",
+      "MURDUM",
+      "POWDER",
+      "TURQUOISE",
+      "MINK",
+      "STEEL"
+    ]
+  },
+  {
+    "name": "VALETTA",
+    "colors": [
+      "GOLD",
+      "SMOKED",
+      "GREY",
+      "KIREMIT",
+      "NAVY BLUE",
+      "SARI",
+      "BLACK"
+    ]
+  },
+  {
+    "name": "VARESE",
+    "colors": [
+      "ANTHRACITE",
+      "BLACK",
+      "BRICK",
+      "BROWN",
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "MILKY BROWN",
+      "MINK",
+      "MUSTARD"
+    ]
+  },
+  {
+    "name": "VEGA",
+    "colors": [
+      "BEIGE",
+      "BLACK",
+      "BLUE",
+      "BRICK",
+      "BROWN",
+      "CLOUD",
+      "CREAM",
+      "DARK BLUE",
+      "ECRUE",
+      "GHISA",
+      "MILKY BROWN",
+      "MINK",
+      "NAVY BLUE",
+      "SAND",
+      "STONE"
+    ]
+  },
+  {
+    "name": "VENUS",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "BITTER",
+      "BLACK",
+      "BLUE",
+      "BROWN",
+      "BURGUNDY",
+      "CLOUD",
+      "COFFEE",
+      "CREAM",
+      "DARK BROWN",
+      "DARK GREY",
+      "ECRUE",
+      "FUCHSIA",
+      "GOLD",
+      "GREEN",
+      "GREY",
+      "LAKE",
+      "LATTE",
+      "LIGHT GREY",
+      "LIME",
+      "MARINE",
+      "MINK",
+      "MOCHA",
+      "MUSTARD",
+      "NAVY BLUE",
+      "OLIVE",
+      "ORANGE",
+      "PEARL",
+      "PETROLEUM",
+      "PISTACHIO",
+      "POWDER",
+      "PURPLE",
+      "RED",
+      "ROSE",
+      "ROSE GOLD",
+      "RUST",
+      "SAGE",
+      "SAND",
+      "SAPPHIRE",
+      "SILVER",
+      "SKY BLUE",
+      "STAR",
+      "STEEL",
+      "STONE",
+      "TILE",
+      "TURQUOISE",
+      "VIOLET"
+    ]
+  },
+  {
+    "name": "VERA",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "VERONA",
+    "colors": [
+      "CREAM",
+      "WHITE",
+      "GREY",
+      "CREAM",
+      "MINK"
+    ]
+  },
+  {
+    "name": "VICENZA",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "GREY",
+      "HAKI",
+      "KAHVE",
+      "CREAM",
+      "NAVY BLUE",
+      "CHICKPEA",
+      "BLACK",
+      "MINK"
+    ]
+  },
+  {
+    "name": "VIGO",
+    "colors": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38"
+    ]
+  },
+  {
+    "name": "VISUAL",
+    "colors": [
+      "CREAM",
+      "ECRUE",
+      "GREY",
+      "STONE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "VOILETTE",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "CREAM",
+      "CHICKPEA",
+      "STONE"
+    ]
+  },
+  {
+    "name": "WIN-01",
+    "colors": [
+      "BEIGE",
+      "WHITE",
+      "GREY",
+      "CREAM",
+      "OFFWHITE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "WIN-04",
+    "colors": [
+      "OFFWHITE",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "WIN-05",
+    "colors": [
+      "OFFWHITE",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "WIN-11",
+    "colors": [
+      "ECRUE",
+      "GREY",
+      "CREAM",
+      "OFFWHITE"
+    ]
+  },
+  {
+    "name": "WIN-13",
+    "colors": [
+      "WHITE",
+      "CREAM",
+      "OFFWHITE"
+    ]
+  },
+  {
+    "name": "WIN-25",
+    "colors": [
+      "CREAM",
+      "OFFWHITE"
+    ]
+  },
+  {
+    "name": "WIN-27",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "SMOKED",
+      "GREY",
+      "GUL KURUSU",
+      "SILVER",
+      "KAHVE",
+      "DARK BROWN",
+      "DARK GREEN",
+      "CREAM",
+      "KIREMIT",
+      "NAVY BLUE",
+      "MURDUM",
+      "CHICKPEA",
+      "POWDER",
+      "SARI",
+      "BLACK",
+      "STONE",
+      "TURQUOISE",
+      "MINK",
+      "GREEN"
+    ]
+  },
+  {
+    "name": "WIN-30",
+    "colors": [
+      "WHITE",
+      "GREY",
+      "CREAM",
+      "OFFWHITE",
+      "STONE"
+    ]
+  },
+  {
+    "name": "WIN-37",
+    "colors": [
+      "WHITE",
+      "CREAM",
+      "OFFWHITE"
+    ]
+  },
+  {
+    "name": "WIN-38",
+    "colors": [
+      "WHITE",
+      "CREAM",
+      "OFFWHITE"
+    ]
+  },
+  {
+    "name": "WIN-43",
+    "colors": [
+      "WHITE",
+      "GREY",
+      "CREAM",
+      "OFFWHITE"
+    ]
+  },
+  {
+    "name": "WIN-44",
+    "colors": [
+      "GREY",
+      "CREAM",
+      "OFFWHITE",
+      "WHITE"
+    ]
+  },
+  {
+    "name": "WIN-45",
+    "colors": [
+      "GREY",
+      "WHITE",
+      "ECRUE",
+      "CREAM",
+      "MINK"
+    ]
+  },
+  {
+    "name": "WIN-46",
+    "colors": [
+      "WHITE",
+      "CREAM",
+      "OFFWHITE",
+      "STONE",
+      "GREY"
+    ]
+  },
+  {
+    "name": "WIN-47",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "WHITE",
+      "BORDO",
+      "SMOKED",
+      "GREY",
+      "HARDAL",
+      "KAHVE",
+      "DARK BEIGE",
+      "DARK BROWN",
+      "DARK BLUE",
+      "DARK MINK",
+      "CREAM",
+      "NAVY BLUE",
+      "LILA",
+      "BLUE",
+      "CHICKPEA",
+      "POWDER",
+      "SUTLU KAHVE",
+      "STONE",
+      "TURQUOISE",
+      "MINK",
+      "GREEN"
+    ]
+  },
+  {
+    "name": "WIN-58",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "WIN-73",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "WIN-74",
+    "colors": [
+      "WHITE",
+      "ECRUE",
+      "GREY",
+      "CREAM"
+    ]
+  },
+  {
+    "name": "WIN-77",
+    "colors": [
+      "GOLD",
+      "SILVER",
+      "SEDEF"
+    ]
+  },
+  {
+    "name": "ZIFIR BLACKOUT",
+    "colors": [
+      "ANTHRACITE",
+      "BEIGE",
+      "WHITE",
+      "GLASS",
+      "ECRUE",
+      "GREY",
+      "GUL KURUSU",
+      "KAHVE",
+      "CAPPUCCINO",
+      "KESTANE",
+      "CREAM",
+      "NAVY BLUE",
+      "BLUE",
+      "CHICKPEA",
+      "BLACK",
+      "SUTLU KAHVE",
+      "STONE",
+      "MINK",
+      "GREEN"
+    ]
+  }
+]
