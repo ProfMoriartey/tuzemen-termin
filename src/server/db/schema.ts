@@ -1,26 +1,33 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
+import { pgTable, text, integer, timestamp, pgEnum, uuid } from "drizzle-orm/pg-core";
 
-import { index, pgTableCreator } from "drizzle-orm/pg-core";
+export const roleEnum = pgEnum("role", ["PENDING", "SELLER", "MANAGER", "DEVELOPER"]);
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = pgTableCreator((name) => `tuzemen-termin_${name}`);
+export const fabrics = pgTable("fabrics", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull().unique(),
+});
 
-export const posts = createTable(
-  "post",
-  (d) => ({
-    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-    name: d.varchar({ length: 256 }),
-    createdAt: d
-      .timestamp({ withTimezone: true })
-      .$defaultFn(() => /* @__PURE__ */ new Date())
-      .notNull(),
-    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
-  }),
-  (t) => [index("name_idx").on(t.name)],
-);
+export const variants = pgTable("variants", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  fabricId: uuid("fabric_id").references(() => fabrics.id),
+  colorName: text("color_name").notNull(),
+});
+
+export const inquiries = pgTable("inquiries", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull(), // Linked to Clerk ID
+  variantId: uuid("variant_id").references(() => variants.id),
+  customerName: text("customer_name").notNull(),
+  quantity: integer("quantity").notNull(), // MT
+  deadline: timestamp("deadline"),
+  status: text("status").default("pending"), // pending, arrived, partial
+  arrivedQty: integer("arrived_qty").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(), // Clerk ID
+  email: text("email").notNull(),
+  role: roleEnum("role").default("PENDING").notNull(),
+  name: text("name"),
+});
