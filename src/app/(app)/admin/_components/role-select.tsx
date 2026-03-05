@@ -22,7 +22,7 @@ export function RoleSelect({
   function handleChange(value: string) {
     startTransition(() => {
       const typedRole = value as "PENDING" | "SELLER" | "MANAGER" | "DEVELOPER";
-      updateUserRole(userId, typedRole);
+      void updateUserRole(userId, typedRole);
     });
   }
 
