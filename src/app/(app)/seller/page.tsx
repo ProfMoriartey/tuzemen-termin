@@ -1,14 +1,73 @@
 import { db } from "~/server/db";
+import { inquiries, fabrics, variants } from "~/server/db/schema";
+import { eq, desc } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
 import { InquiryForm } from "~/components/forms/inquiry-form";
+import { InquiryList } from "~/components/seller/inquiry-list";
+import { Plus } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog";
 
-export default async function SellerPage() {
+export default async function SellerDashboard() {
+  const { userId } = await auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
   const allFabrics = await db.query.fabrics.findMany();
   const allVariants = await db.query.variants.findMany();
 
+  const userInquiries = await db
+    .select({
+      id: inquiries.id,
+      quantity: inquiries.quantity,
+      customerName: inquiries.customerName,
+      deadline: inquiries.deadline,
+      arrivedQty: inquiries.arrivedQty,
+      fabricName: fabrics.name,
+      colorName: variants.colorName,
+    })
+    .from(inquiries)
+    .leftJoin(variants, eq(inquiries.variantId, variants.id))
+    .leftJoin(fabrics, eq(variants.fabricId, fabrics.id))
+    .where(eq(inquiries.userId, userId))
+    .orderBy(desc(inquiries.createdAt));
+
   return (
-    <div className="flex min-h-screen flex-col items-center p-4 pt-12">
-      <h1 className="mb-6 text-2xl font-bold">New Production Inquiry</h1>
-      <InquiryForm fabrics={allFabrics} variants={allVariants} />
+    <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-8 p-4 pt-8 md:flex-row">
+      {/* Desktop Form */}
+      <div className="hidden w-full md:block md:w-1/3">
+        <h2 className="mb-4 text-xl font-bold">New Inquiry</h2>
+        <InquiryForm fabrics={allFabrics} variants={allVariants} />
+      </div>
+
+      {/* Order List */}
+      <div className="w-full pb-24 md:w-2/3 md:pb-0">
+        <h2 className="mb-4 text-xl font-bold">Your Orders</h2>
+        <InquiryList inquiries={userInquiries} />
+      </div>
+
+      {/* Mobile Floating Action Button */}
+      <div className="fixed right-6 bottom-6 md:hidden">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="h-14 w-14 rounded-full shadow-lg" size="icon">
+              <Plus className="h-6 w-6" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-106.25">
+            <DialogHeader>
+              <DialogTitle>New Production Inquiry</DialogTitle>
+            </DialogHeader>
+            <InquiryForm fabrics={allFabrics} variants={allVariants} />
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }
