@@ -1,5 +1,5 @@
 import { db } from "~/server/db";
-import { inquiries, fabrics, variants } from "~/server/db/schema";
+import { inquiries, fabrics, variants, users } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 import { ProductionList } from "~/components/manager/production-list";
 
@@ -14,10 +14,12 @@ export default async function ManagerPage() {
       variantId: inquiries.variantId,
       fabricName: fabrics.name,
       colorName: variants.colorName,
+      sellerName: users.name,
     })
     .from(inquiries)
     .leftJoin(variants, eq(inquiries.variantId, variants.id))
-    .leftJoin(fabrics, eq(variants.fabricId, fabrics.id));
+    .leftJoin(fabrics, eq(variants.fabricId, fabrics.id))
+    .leftJoin(users, eq(inquiries.userId, users.id));
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col p-4 pt-8">

@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { Input } from "~/components/ui/input";
+import { Search } from "lucide-react";
 
 type SellerInquiry = {
   id: string;
@@ -24,12 +26,23 @@ type SortOption = "date" | "status" | "name" | "color" | "customer";
 
 export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
   const [sortBy, setSortBy] = useState<SortOption>("date");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const activeInquiries = inquiries.filter(
+  const filteredInquiries = inquiries.filter((item) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      item.fabricName?.toLowerCase().includes(query) ||
+      item.colorName?.toLowerCase().includes(query) ||
+      item.customerName.toLowerCase().includes(query)
+    );
+  });
+
+  const activeInquiries = filteredInquiries.filter(
     (item) => (item.arrivedQty ?? 0) < item.quantity,
   );
 
-  const archivedInquiries = inquiries.filter(
+  const archivedInquiries = filteredInquiries.filter(
     (item) => (item.arrivedQty ?? 0) >= item.quantity,
   );
 
@@ -43,25 +56,13 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
       const isPartialB = arrivedB > 0 && arrivedB < b.quantity;
       const statusRankB = isPartialB ? 2 : 1;
 
-      if (sortBy === "status") {
-        return statusRankA - statusRankB;
-      }
-
-      if (sortBy === "customer") {
+      if (sortBy === "status") return statusRankA - statusRankB;
+      if (sortBy === "customer")
         return a.customerName.localeCompare(b.customerName);
-      }
-
-      if (sortBy === "name") {
-        const nameA = a.fabricName ?? "";
-        const nameB = b.fabricName ?? "";
-        return nameA.localeCompare(nameB);
-      }
-
-      if (sortBy === "color") {
-        const colorA = a.colorName ?? "";
-        const colorB = b.colorName ?? "";
-        return colorA.localeCompare(colorB);
-      }
+      if (sortBy === "name")
+        return (a.fabricName ?? "").localeCompare(b.fabricName ?? "");
+      if (sortBy === "color")
+        return (a.colorName ?? "").localeCompare(b.colorName ?? "");
 
       const dateA = a.deadline ? new Date(a.deadline).getTime() : 0;
       const dateB = b.deadline ? new Date(b.deadline).getTime() : 0;
@@ -135,6 +136,16 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
   return (
     <div className="flex w-full flex-col gap-8">
       <div className="flex flex-col gap-4">
+        <div className="relative">
+          <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-slate-500" />
+          <Input
+            placeholder="Search fabric, color, or customer..."
+            className="pl-9"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="text-lg font-bold">Active Orders</h3>
           <Select

@@ -1,11 +1,26 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateInquiryStatus } from "~/server/actions/manager";
+import { updateGroupedInquiries } from "~/server/actions/manager";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { Search } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog";
+import { format } from "date-fns";
 
-// Define your types based on the Drizzle query output
 type InquiryData = {
   id: string;
   quantity: number;
@@ -15,116 +30,291 @@ type InquiryData = {
   variantId: string | null;
   fabricName: string | null;
   colorName: string | null;
+  sellerName: string | null;
 };
 
-export function ProductionList({ data }: { data: InquiryData[] }) {
+type SortOption = "fabric" | "color" | "seller";
+
+// 1. Create a dedicated Card Component to manage its own state
+function GroupCard({
+  group,
+  category,
+}: {
+  group: any;
+  category: "late" | "active" | "archive";
+}) {
+  const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  // Group items by variantId
-  const grouped = data.reduce(
-    (acc, item) => {
-      const key = item.variantId ?? "unknown";
-      if (!acc[key]) {
-        acc[key] = {
-          title: `${item.fabricName} - ${item.colorName}`,
-          totalQty: 0,
-          inquiries: [],
-        };
-      }
-      acc[key].totalQty += item.quantity;
-      acc[key].inquiries.push(item);
-      return acc;
-    },
-    {} as Record<
-      string,
-      { title: string; totalQty: number; inquiries: InquiryData[] }
-    >,
-  );
-
-  function handleUpdate(inquiryId: string, formData: FormData) {
+  function handleBatchUpdate(formData: FormData) {
     startTransition(async () => {
       try {
         const rawDate = formData.get("deadline") as string;
         const deadlineDate = rawDate ? new Date(rawDate) : null;
-        const arrivedQty = Number(formData.get("arrivedQty")) || 0;
+        const totalArrived = Number(formData.get("totalArrived")) || 0;
 
-        await updateInquiryStatus(inquiryId, deadlineDate, arrivedQty);
+        await updateGroupedInquiries(
+          group.variantId,
+          deadlineDate,
+          totalArrived,
+        );
+        setOpen(false); // Close the dialog upon successful update
       } catch (error) {
         console.error(error);
       }
     });
   }
 
+  let cardStyle = "bg-white border-slate-200 hover:bg-slate-50";
+  if (category === "archive")
+    cardStyle = "bg-green-50 border-green-300 hover:bg-green-100";
+  else if (category === "late")
+    cardStyle = "bg-red-50 border-red-300 hover:bg-red-100";
+  else if (!group.deadline)
+    cardStyle = "bg-yellow-50 border-yellow-300 hover:bg-yellow-100";
+
+  const sortedInquiries = [...group.inquiries].sort(
+    (a: InquiryData, b: InquiryData) =>
+      (a.sellerName || "").localeCompare(b.sellerName || ""),
+  );
+
   return (
-    <div className="flex w-full flex-col gap-6">
-      {Object.values(grouped).map((group) => (
-        <div
-          key={group.title}
-          className="bg-card rounded-lg border p-4 shadow-sm"
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button
+          className={`w-full cursor-pointer rounded-lg border p-4 text-left shadow-sm transition-colors ${cardStyle}`}
         >
-          <div className="mb-4 border-b pb-2">
-            <h2 className="text-lg font-bold">{group.title}</h2>
-            <p className="text-sm text-slate-500">
-              Total Required: {group.totalQty} MT | Inquiries:{" "}
-              {group.inquiries.length}
-            </p>
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <div>
+              <h2 className="text-base font-bold sm:text-lg">{group.title}</h2>
+              <p className="text-sm font-medium text-slate-600">
+                Arrived: {group.totalArrived} / {group.totalQty} MT
+              </p>
+            </div>
+            <div className="text-sm font-medium text-slate-500">
+              {group.deadline
+                ? `Deadline: ${format(new Date(group.deadline), "MMM d, yyyy")}`
+                : "No Deadline Set"}
+            </div>
+          </div>
+        </button>
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-125">
+        <DialogHeader>
+          <DialogTitle>{group.title}</DialogTitle>
+        </DialogHeader>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex max-h-[40vh] flex-col gap-2 overflow-y-auto pr-2">
+            {sortedInquiries.map((inquiry: InquiryData) => (
+              <div
+                key={inquiry.id}
+                className="flex justify-between rounded-md border bg-slate-50 p-3 text-sm"
+              >
+                <div>
+                  <span className="block font-semibold">
+                    {inquiry.sellerName}
+                  </span>
+                  <span className="text-slate-500">
+                    Customer: {inquiry.customerName}
+                  </span>
+                </div>
+                <div className="font-medium text-slate-800">
+                  {inquiry.arrivedQty ?? 0} / {inquiry.quantity} MT
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="flex flex-col gap-4">
-            {group.inquiries.map((inquiry) => {
-              const isOverdue =
-                inquiry.deadline && new Date() > inquiry.deadline;
+          <form
+            action={handleBatchUpdate}
+            className="flex flex-col gap-3 rounded-md border bg-slate-50 p-4 sm:flex-row sm:items-end"
+          >
+            <label className="flex flex-1 flex-col gap-1 text-xs font-medium">
+              Batch Deadline
+              <Input
+                type="date"
+                name="deadline"
+                defaultValue={
+                  group.deadline
+                    ? new Date(group.deadline).toISOString().split("T")[0]
+                    : ""
+                }
+              />
+            </label>
 
-              return (
-                <form
-                  key={inquiry.id}
-                  action={(formData) => handleUpdate(inquiry.id, formData)}
-                  className={`flex flex-col gap-3 rounded-md border p-3 ${isOverdue ? "border-red-500 bg-red-50" : "bg-slate-50"}`}
-                >
-                  <div className="flex justify-between text-sm font-medium">
-                    <span>{inquiry.customerName}</span>
-                    <span>{inquiry.quantity} MT</span>
-                  </div>
+            <label className="flex flex-1 flex-col gap-1 text-xs font-medium">
+              Total Arrived (MT)
+              <Input
+                type="number"
+                name="totalArrived"
+                defaultValue={group.totalArrived}
+                min="0"
+              />
+            </label>
 
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-                    <label className="flex flex-1 flex-col gap-1 text-xs">
-                      Deadline
-                      <Input
-                        type="date"
-                        name="deadline"
-                        defaultValue={
-                          inquiry.deadline
-                            ? inquiry.deadline.toISOString().split("T")[0]
-                            : ""
-                        }
-                      />
-                    </label>
-
-                    <label className="flex flex-1 flex-col gap-1 text-xs">
-                      Arrived (MT)
-                      <Input
-                        type="number"
-                        name="arrivedQty"
-                        defaultValue={inquiry.arrivedQty ?? 0}
-                        min="0"
-                      />
-                    </label>
-
-                    <Button
-                      type="submit"
-                      disabled={isPending}
-                      size="sm"
-                      className="mt-2 sm:mt-0"
-                    >
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              );
-            })}
-          </div>
+            <Button
+              type="submit"
+              disabled={isPending}
+              size="sm"
+              className="mt-2 sm:mt-0"
+            >
+              {isPending ? "Saving..." : "Save Batch"}
+            </Button>
+          </form>
         </div>
-      ))}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// 2. The Main List Component
+export function ProductionList({ data }: { data: InquiryData[] }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<SortOption>("fabric");
+
+  const filteredData = data.filter((item) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      item.fabricName?.toLowerCase().includes(query) ||
+      item.colorName?.toLowerCase().includes(query) ||
+      item.customerName.toLowerCase().includes(query) ||
+      item.sellerName?.toLowerCase().includes(query)
+    );
+  });
+
+  const grouped = filteredData.reduce(
+    (acc, item) => {
+      const key = item.variantId ?? "unknown";
+      if (!acc[key]) {
+        acc[key] = {
+          variantId: key,
+          fabricName: item.fabricName || "",
+          colorName: item.colorName || "",
+          title: `${item.fabricName} - ${item.colorName}`,
+          totalQty: 0,
+          totalArrived: 0,
+          deadline: item.deadline,
+          inquiries: [],
+        };
+      }
+      acc[key].totalQty += item.quantity;
+      acc[key].totalArrived += item.arrivedQty ?? 0;
+      acc[key].inquiries.push(item);
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
+
+  const sortedGroups = Object.values(grouped).sort((a, b) => {
+    const getTopSeller = (inquiries: InquiryData[]) => {
+      const sorted = [...inquiries].sort((x, y) =>
+        (x.sellerName || "").localeCompare(y.sellerName || ""),
+      );
+      return sorted[0]?.sellerName || "";
+    };
+
+    if (sortBy === "seller") {
+      const sellerA = getTopSeller(a.inquiries);
+      const sellerB = getTopSeller(b.inquiries);
+      const sellerCompare = sellerA.localeCompare(sellerB);
+      if (sellerCompare !== 0) return sellerCompare;
+    }
+
+    if (sortBy === "color") {
+      const colorCompare = a.colorName.localeCompare(b.colorName);
+      if (colorCompare !== 0) return colorCompare;
+      return a.fabricName.localeCompare(b.fabricName);
+    }
+
+    const fabricCompare = a.fabricName.localeCompare(b.fabricName);
+    if (fabricCompare !== 0) return fabricCompare;
+    return a.colorName.localeCompare(b.colorName);
+  });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const lateGroups: any[] = [];
+  const activeGroups: any[] = [];
+  const archivedGroups: any[] = [];
+
+  sortedGroups.forEach((group) => {
+    const isFulfilled = group.totalArrived >= group.totalQty;
+    const hasDeadline = !!group.deadline;
+    const deadlineDate = hasDeadline ? new Date(group.deadline) : null;
+
+    if (deadlineDate) deadlineDate.setHours(0, 0, 0, 0);
+
+    const isLate = hasDeadline && deadlineDate! < today && !isFulfilled;
+
+    if (isFulfilled) archivedGroups.push(group);
+    else if (isLate) lateGroups.push(group);
+    else activeGroups.push(group);
+  });
+
+  return (
+    <div className="flex w-full flex-col gap-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative flex-1">
+          <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-slate-500" />
+          <Input
+            placeholder="Search fabric, color, customer, or seller..."
+            className="pl-9"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        <Select
+          value={sortBy}
+          onValueChange={(value) => setSortBy(value as SortOption)}
+        >
+          <SelectTrigger className="w-full sm:w-50">
+            <SelectValue placeholder="Sort by..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="fabric">Fabric Name</SelectItem>
+            <SelectItem value="color">Color</SelectItem>
+            <SelectItem value="seller">Issuing Name (Seller)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {sortedGroups.length === 0 && (
+        <p className="text-slate-500">No orders match your search.</p>
+      )}
+
+      {lateGroups.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <h3 className="text-lg font-bold text-red-600">Late Orders</h3>
+          {lateGroups.map((group) => (
+            <GroupCard key={group.variantId} group={group} category="late" />
+          ))}
+        </div>
+      )}
+
+      {activeGroups.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <h3 className="text-lg font-bold">Active Orders</h3>
+          {activeGroups.map((group) => (
+            <GroupCard key={group.variantId} group={group} category="active" />
+          ))}
+        </div>
+      )}
+
+      {archivedGroups.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <h3 className="text-lg font-bold text-green-700">
+            Archive (Fulfilled)
+          </h3>
+          {archivedGroups.map((group) => (
+            <GroupCard key={group.variantId} group={group} category="archive" />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
