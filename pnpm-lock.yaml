@@ -11,6 +11,9 @@ importers:
       '@clerk/nextjs':
         specifier: ^7.0.1
         version: 7.0.1(next@15.5.12(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@neondatabase/serverless':
+        specifier: ^1.0.2
+        version: 1.0.2
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.9.3)(zod@3.25.76)
@@ -5033,7 +5036,6 @@ snapshots:
     dependencies:
       '@types/node': 22.19.13
       '@types/pg': 8.18.0
-    optional: true
 
   '@next/env@15.5.12': {}
 
@@ -5966,14 +5968,12 @@ snapshots:
   '@types/node@22.19.13':
     dependencies:
       undici-types: 6.21.0
-    optional: true
 
   '@types/pg@8.18.0':
     dependencies:
       '@types/node': 20.19.35
       pg-protocol: 1.13.0
       pg-types: 2.2.0
-    optional: true
 
   '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:
@@ -7815,11 +7815,9 @@ snapshots:
 
   path-to-regexp@8.3.0: {}
 
-  pg-int8@1.0.1:
-    optional: true
+  pg-int8@1.0.1: {}
 
-  pg-protocol@1.13.0:
-    optional: true
+  pg-protocol@1.13.0: {}
 
   pg-types@2.2.0:
     dependencies:
@@ -7828,7 +7826,6 @@ snapshots:
       postgres-bytea: 1.0.1
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
-    optional: true
 
   picocolors@1.1.1: {}
 
@@ -7857,19 +7854,15 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postgres-array@2.0.0:
-    optional: true
+  postgres-array@2.0.0: {}
 
-  postgres-bytea@1.0.1:
-    optional: true
+  postgres-bytea@1.0.1: {}
 
-  postgres-date@1.0.7:
-    optional: true
+  postgres-date@1.0.7: {}
 
   postgres-interval@1.2.0:
     dependencies:
       xtend: 4.0.2
-    optional: true
 
   postgres@3.4.8: {}
 
@@ -8691,8 +8684,7 @@ snapshots:
       is-wsl: 3.1.1
       powershell-utils: 0.1.0
 
-  xtend@4.0.2:
-    optional: true
+  xtend@4.0.2: {}
 
   y18n@5.0.8: {}
 
