@@ -9,7 +9,7 @@ export const fabrics = pgTable("fabrics", {
 
 export const variants = pgTable("variants", {
   id: uuid("id").primaryKey().defaultRandom(),
-  fabricId: uuid("fabric_id").references(() => fabrics.id),
+  fabricId: uuid("fabric_id").references(() => fabrics.id).notNull(),
   colorName: text("color_name").notNull(),
 });
 

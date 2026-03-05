@@ -1,0 +1,1 @@
+ALTER TABLE "variants" ALTER COLUMN "fabric_id" SET NOT NULL;

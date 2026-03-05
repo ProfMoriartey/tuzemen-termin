@@ -1,5 +1,5 @@
 import { db } from "~/server/db";
-import { RoleSelect } from "./_components/role-select";
+import { RoleSelect } from "../../../components/admin/role-select";
 import {
   Table,
   TableBody,

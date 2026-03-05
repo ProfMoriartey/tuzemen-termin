@@ -15,6 +15,13 @@
       "when": 1772687692039,
       "tag": "0001_worried_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772712058513,
+      "tag": "0002_luxuriant_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }
