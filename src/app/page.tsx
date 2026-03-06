@@ -45,6 +45,16 @@ export default async function HomePage() {
               {(role === "SELLER" ||
                 role === "MANAGER" ||
                 role === "DEVELOPER") && (
+                <Link href="/calendar">
+                  <Button size="lg" className="w-full text-lg sm:w-auto">
+                    Calendar
+                  </Button>
+                </Link>
+              )}
+
+              {(role === "SELLER" ||
+                role === "MANAGER" ||
+                role === "DEVELOPER") && (
                 <Link href="/seller">
                   <Button size="lg" className="w-full text-lg sm:w-auto">
                     Seller Dashboard
@@ -56,7 +66,6 @@ export default async function HomePage() {
                 <Link href="/manager">
                   <Button
                     size="lg"
-                    variant="secondary"
                     className="w-full border border-slate-200 text-lg sm:w-auto"
                   >
                     Manager Dashboard
@@ -66,11 +75,7 @@ export default async function HomePage() {
 
               {role === "DEVELOPER" && (
                 <Link href="/admin">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full text-lg sm:w-auto"
-                  >
+                  <Button size="lg" className="w-full text-lg sm:w-auto">
                     Admin Dashboard
                   </Button>
                 </Link>
