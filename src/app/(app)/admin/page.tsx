@@ -9,8 +9,16 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { DeleteUserButton } from "~/components/admin/delete-user-button";
+import { requireRoles } from "~/server/check-role";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function AdminPage() {
+  await requireRoles(["DEVELOPER"]);
+
+  const { userId } = await auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
   const allUsers = await db.query.users.findMany({
     orderBy: (users, { desc }) => desc(users.role),
   });

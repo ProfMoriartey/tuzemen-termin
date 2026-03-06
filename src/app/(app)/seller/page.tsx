@@ -13,8 +13,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import { requireRoles } from "~/server/check-role";
 
 export default async function SellerDashboard() {
+  await requireRoles(["SELLER", "MANAGER", "DEVELOPER"]);
+
   const { userId } = await auth();
 
   if (!userId) throw new Error("Unauthorized");

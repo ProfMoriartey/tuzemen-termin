@@ -2,8 +2,16 @@ import { db } from "~/server/db";
 import { inquiries, fabrics, variants, users } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 import { ProductionList } from "~/components/manager/production-list";
+import { requireRoles } from "~/server/check-role";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function ManagerPage() {
+  await requireRoles(["MANAGER", "DEVELOPER"]);
+
+  const { userId } = await auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
   const rawData = await db
     .select({
       id: inquiries.id,
