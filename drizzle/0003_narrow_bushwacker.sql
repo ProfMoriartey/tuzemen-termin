@@ -1,0 +1,1 @@
+ALTER TABLE "inquiries" ADD COLUMN "new_batch_alert" boolean DEFAULT false;

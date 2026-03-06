@@ -18,6 +18,8 @@ export default async function ManagerPage() {
       quantity: inquiries.quantity,
       customerName: inquiries.customerName,
       deadline: inquiries.deadline,
+      status: inquiries.status,
+      newBatchAlert: inquiries.newBatchAlert,
       arrivedQty: inquiries.arrivedQty,
       variantId: inquiries.variantId,
       fabricName: fabrics.name,

@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, pgEnum, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, pgEnum, uuid, boolean } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["PENDING", "SELLER", "MANAGER", "DEVELOPER"]);
 
@@ -23,6 +23,7 @@ export const inquiries = pgTable("inquiries", {
   status: text("status").default("pending"), // pending, arrived, partial
   arrivedQty: integer("arrived_qty").default(0),
   createdAt: timestamp("created_at").defaultNow(),
+  newBatchAlert: boolean("new_batch_alert").default(false),
 });
 
 export const users = pgTable("users", {

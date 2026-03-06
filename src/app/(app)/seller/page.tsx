@@ -1,5 +1,5 @@
 import { db } from "~/server/db";
-import { inquiries, fabrics, variants } from "~/server/db/schema";
+import { inquiries, fabrics, variants, users } from "~/server/db/schema"; // Add users here
 import { desc, eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import { InquiryForm } from "~/components/forms/inquiry-form";
@@ -13,11 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { requireRoles } from "~/server/check-role";
 
 export default async function SellerDashboard() {
-  await requireRoles(["SELLER", "MANAGER", "DEVELOPER"]);
-
   const { userId } = await auth();
 
   if (!userId) throw new Error("Unauthorized");
@@ -31,13 +28,17 @@ export default async function SellerDashboard() {
       quantity: inquiries.quantity,
       customerName: inquiries.customerName,
       deadline: inquiries.deadline,
-      arrivedQty: inquiries.arrivedQty,
+      status: inquiries.status,
+      newBatchAlert: inquiries.newBatchAlert,
+      arrivedQty: inquiries.arrivedQty, // Kept to match your existing data
       fabricName: fabrics.name,
       colorName: variants.colorName,
+      sellerName: users.name, // Add this line
     })
     .from(inquiries)
     .leftJoin(variants, eq(inquiries.variantId, variants.id))
     .leftJoin(fabrics, eq(variants.fabricId, fabrics.id))
+    .leftJoin(users, eq(inquiries.userId, users.id)) // Add this join
     .orderBy(desc(inquiries.createdAt));
 
   return (

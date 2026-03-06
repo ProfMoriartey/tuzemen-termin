@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateDesignStatus } from "~/server/actions/manager";
+import { notifyNewBatch } from "~/server/actions/workflow";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Bell } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -12,29 +12,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/components/ui/dialog";
-import { Checkbox } from "~/components/ui/checkbox";
-import { format } from "date-fns";
 
 type InquiryData = {
   id: string;
   quantity: number;
   customerName: string;
   deadline: Date | null;
-  arrivedQty: number | null;
+  status: string | null;
+  newBatchAlert: boolean | null;
   variantId: string | null;
   fabricName: string | null;
   colorName: string | null;
   sellerName: string | null;
 };
 
-type SortOption = "fabric" | "color" | "seller";
+type SortOption = "fabric" | "seller" | "customer" | "date";
 
 type GroupedData = {
   variantId: string;
@@ -42,136 +34,65 @@ type GroupedData = {
   colorName: string;
   title: string;
   totalQty: number;
-  totalArrived: number;
   deadline: Date | null;
   inquiries: InquiryData[];
 };
 
-function GroupCard({
-  group,
-  category,
-}: {
-  group: GroupedData;
-  category: "late" | "active" | "archive";
-}) {
-  const [open, setOpen] = useState(false);
+function GroupCard({ group }: { group: GroupedData }) {
   const [isPending, startTransition] = useTransition();
 
-  function handleBatchUpdate(formData: FormData) {
+  function handleNotify() {
     startTransition(async () => {
       try {
-        const rawDate = formData.get("deadline") as string;
-        const deadlineDate = rawDate ? new Date(rawDate) : null;
-        const isFulfilled = formData.get("isFulfilled") === "on";
-
-        await updateDesignStatus(group.variantId, deadlineDate, isFulfilled);
-        setOpen(false);
+        await notifyNewBatch(group.variantId);
       } catch (error) {
         console.error(error);
       }
     });
   }
 
-  let cardStyle = "bg-white border-slate-200 hover:bg-slate-50";
-  if (category === "archive")
-    cardStyle = "bg-green-50 border-green-300 hover:bg-green-100";
-  else if (category === "late")
-    cardStyle = "bg-red-50 border-red-300 hover:bg-red-100";
-  else if (!group.deadline)
-    cardStyle = "bg-yellow-50 border-yellow-300 hover:bg-yellow-100";
-
-  const sortedInquiries = [...group.inquiries].sort(
-    (a: InquiryData, b: InquiryData) =>
-      (a.sellerName ?? "").localeCompare(b.sellerName ?? ""),
+  const sortedInquiries = [...group.inquiries].sort((a, b) =>
+    (a.sellerName ?? "").localeCompare(b.sellerName ?? ""),
   );
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button
-          className={`w-full cursor-pointer rounded-lg border p-4 text-left shadow-sm transition-colors ${cardStyle}`}
-        >
-          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-            <div>
-              <h2 className="text-base font-bold sm:text-lg">{group.title}</h2>
-              <p className="text-sm font-medium text-slate-600">
-                Total Required: {group.totalQty} MT
-              </p>
-            </div>
-            <div className="text-sm font-medium text-slate-500">
-              {group.deadline
-                ? `Deadline: ${format(new Date(group.deadline), "MMM d, yyyy")}`
-                : "No Deadline Set"}
-            </div>
-          </div>
-        </button>
-      </DialogTrigger>
-
-      <DialogContent className="sm:max-w-125">
-        <DialogHeader>
-          <DialogTitle>{group.title}</DialogTitle>
-        </DialogHeader>
-
-        <div className="flex flex-col gap-4">
-          <div className="flex max-h-[40vh] flex-col gap-2 overflow-y-auto pr-2">
-            {sortedInquiries.map((inquiry: InquiryData) => (
-              <div
-                key={inquiry.id}
-                className="flex justify-between rounded-md border bg-slate-50 p-3 text-sm"
-              >
-                <div>
-                  <span className="block font-semibold">
-                    {inquiry.sellerName}
-                  </span>
-                  <span className="text-slate-500">
-                    Customer: {inquiry.customerName}
-                  </span>
-                </div>
-                <div className="font-medium text-slate-800">
-                  {inquiry.quantity} MT
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {category !== "archive" && (
-            <form
-              action={handleBatchUpdate}
-              className="flex flex-col gap-4 rounded-md border bg-slate-50 p-4"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-                <label className="flex flex-1 flex-col gap-1 text-xs font-medium">
-                  Set Deadline
-                  <Input
-                    type="date"
-                    name="deadline"
-                    defaultValue={
-                      group.deadline
-                        ? new Date(group.deadline).toISOString().split("T")[0]
-                        : ""
-                    }
-                  />
-                </label>
-
-                <div className="flex flex-1 items-center space-x-2 pb-2">
-                  <Checkbox id="isFulfilled" name="isFulfilled" />
-                  <label
-                    htmlFor="isFulfilled"
-                    className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Mark as Fulfilled
-                  </label>
-                </div>
-
-                <Button type="submit" disabled={isPending} size="sm">
-                  {isPending ? "Saving..." : "Save"}
-                </Button>
-              </div>
-            </form>
-          )}
+    <div className="rounded-lg border bg-white p-4 shadow-sm">
+      <div className="mb-4 flex flex-col gap-4 border-b pb-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-lg font-bold">{group.title}</h2>
+          <p className="text-sm font-medium text-slate-500">
+            Total Required: {group.totalQty} MT
+          </p>
         </div>
-      </DialogContent>
-    </Dialog>
+        <Button
+          onClick={handleNotify}
+          disabled={isPending}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
+          <Bell className="mr-2 h-4 w-4" />
+          {isPending ? "Notifying..." : "New Batch Arrived"}
+        </Button>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        {sortedInquiries.map((inquiry) => (
+          <div
+            key={inquiry.id}
+            className="flex justify-between rounded-md border bg-slate-50 p-3 text-sm"
+          >
+            <div>
+              <span className="block font-semibold">{inquiry.sellerName}</span>
+              <span className="text-slate-500">
+                Customer: {inquiry.customerName}
+              </span>
+            </div>
+            <div className="font-medium text-slate-800">
+              {inquiry.quantity} MT
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -183,22 +104,18 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
-      item.fabricName?.toLowerCase().includes(query) ??
-      item.colorName?.toLowerCase().includes(query) ??
-      item.customerName.toLowerCase().includes(query) ??
+      item.fabricName?.toLowerCase().includes(query) ||
+      item.colorName?.toLowerCase().includes(query) ||
+      item.customerName.toLowerCase().includes(query) ||
       item.sellerName?.toLowerCase().includes(query)
     );
   });
 
-  const activeItems = filteredData.filter(
-    (item) => (item.arrivedQty ?? 0) < item.quantity,
-  );
-  const archivedItems = filteredData.filter(
-    (item) => (item.arrivedQty ?? 0) >= item.quantity,
-  );
+  // Only group active items
+  const activeItems = filteredData.filter((item) => item.status !== "arrived");
 
-  function createGroups(items: InquiryData[]) {
-    const grouped = items.reduce<Record<string, GroupedData>>((acc, item) => {
+  const grouped = activeItems.reduce<Record<string, GroupedData>>(
+    (acc, item) => {
       const key = item.variantId ?? "unknown";
 
       acc[key] ??= {
@@ -207,7 +124,6 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
         colorName: item.colorName ?? "",
         title: `${item.fabricName ?? ""} - ${item.colorName ?? ""}`,
         totalQty: 0,
-        totalArrived: 0,
         deadline: item.deadline,
         inquiries: [],
       };
@@ -216,60 +132,49 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
 
       if (currentGroup) {
         currentGroup.totalQty += item.quantity;
-        currentGroup.totalArrived += item.arrivedQty ?? 0;
         currentGroup.inquiries.push(item);
       }
 
       return acc;
-    }, {});
+    },
+    {},
+  );
 
-    return Object.values(grouped).sort((a, b) => {
-      const getTopSeller = (inquiries: InquiryData[]) => {
-        const sorted = [...inquiries].sort((x, y) =>
+  const sortedGroups = Object.values(grouped).sort((a, b) => {
+    if (sortBy === "date") {
+      const dateA = a.deadline ? new Date(a.deadline).getTime() : Infinity;
+      const dateB = b.deadline ? new Date(b.deadline).getTime() : Infinity;
+      return dateA - dateB;
+    }
+
+    if (sortBy === "seller") {
+      const sellerA =
+        [...a.inquiries].sort((x, y) =>
           (x.sellerName ?? "").localeCompare(y.sellerName ?? ""),
-        );
-        return sorted[0]?.sellerName ?? "";
-      };
+        )[0]?.sellerName ?? "";
+      const sellerB =
+        [...b.inquiries].sort((x, y) =>
+          (x.sellerName ?? "").localeCompare(y.sellerName ?? ""),
+        )[0]?.sellerName ?? "";
+      return sellerA.localeCompare(sellerB);
+    }
 
-      if (sortBy === "seller") {
-        const sellerA = getTopSeller(a.inquiries);
-        const sellerB = getTopSeller(b.inquiries);
-        const sellerCompare = sellerA.localeCompare(sellerB);
-        if (sellerCompare !== 0) return sellerCompare;
-      }
+    if (sortBy === "customer") {
+      const custA =
+        [...a.inquiries].sort((x, y) =>
+          x.customerName.localeCompare(y.customerName),
+        )[0]?.customerName ?? "";
+      const custB =
+        [...b.inquiries].sort((x, y) =>
+          x.customerName.localeCompare(y.customerName),
+        )[0]?.customerName ?? "";
+      return custA.localeCompare(custB);
+    }
 
-      if (sortBy === "color") {
-        const colorCompare = a.colorName.localeCompare(b.colorName);
-        if (colorCompare !== 0) return colorCompare;
-        return a.fabricName.localeCompare(b.fabricName);
-      }
-
-      const fabricCompare = a.fabricName.localeCompare(b.fabricName);
-      if (fabricCompare !== 0) return fabricCompare;
-      return a.colorName.localeCompare(b.colorName);
-    });
-  }
-
-  const sortedActiveGroups = createGroups(activeItems);
-  const sortedArchivedGroups = createGroups(archivedItems);
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const lateGroups: GroupedData[] = [];
-  const activeGroups: GroupedData[] = [];
-
-  sortedActiveGroups.forEach((group) => {
-    const hasDeadline = !!group.deadline;
-    const deadlineDate =
-      hasDeadline && group.deadline ? new Date(group.deadline) : null;
-
-    if (deadlineDate) deadlineDate.setHours(0, 0, 0, 0);
-
-    const isLate = hasDeadline && deadlineDate && deadlineDate < today;
-
-    if (isLate) lateGroups.push(group);
-    else activeGroups.push(group);
+    // Default: fabric
+    const fabricCompare = a.fabricName.localeCompare(b.fabricName);
+    if (fabricCompare !== 0) return fabricCompare;
+    return a.colorName.localeCompare(b.colorName);
   });
 
   return (
@@ -294,41 +199,21 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="fabric">Fabric Name</SelectItem>
-            <SelectItem value="color">Color</SelectItem>
             <SelectItem value="seller">Issuing Name (Seller)</SelectItem>
+            <SelectItem value="customer">Customer Name</SelectItem>
+            <SelectItem value="date">Delivery Date</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      {sortedActiveGroups.length === 0 && sortedArchivedGroups.length === 0 && (
-        <p className="text-slate-500">No orders match your search.</p>
-      )}
-
-      {lateGroups.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <h3 className="text-lg font-bold text-red-600">Late Orders</h3>
-          {lateGroups.map((group) => (
-            <GroupCard key={group.variantId} group={group} category="late" />
-          ))}
-        </div>
-      )}
-
-      {activeGroups.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <h3 className="text-lg font-bold">Active Orders</h3>
-          {activeGroups.map((group) => (
-            <GroupCard key={group.variantId} group={group} category="active" />
-          ))}
-        </div>
-      )}
-
-      {sortedArchivedGroups.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <h3 className="text-lg font-bold text-green-700">
-            Archive (Fulfilled)
-          </h3>
-          {sortedArchivedGroups.map((group) => (
-            <GroupCard key={group.variantId} group={group} category="archive" />
+      {sortedGroups.length === 0 ? (
+        <p className="text-slate-500">
+          No active production items match your search.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {sortedGroups.map((group) => (
+            <GroupCard key={group.variantId} group={group} />
           ))}
         </div>
       )}
