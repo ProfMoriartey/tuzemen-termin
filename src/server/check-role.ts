@@ -8,7 +8,7 @@ export async function requireRoles(allowedRoles: string[]) {
   const { userId } = await auth()
 
   if (!userId) {
-    redirect("/sign-in")
+    redirect("/")
   }
 
   const userRecord = await db.query.users.findFirst({
