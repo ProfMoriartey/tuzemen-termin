@@ -201,22 +201,20 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
   const grouped = filteredData.reduce<Record<string, GroupedData>>(
     (acc, item) => {
       const key = item.variantId ?? "unknown";
-      if (!acc[key]) {
-        acc[key] = {
-          variantId: key,
-          fabricName: item.fabricName ?? "",
-          colorName: item.colorName ?? "",
-          title: `${item.fabricName ?? ""} - ${item.colorName ?? ""}`,
-          totalQty: 0,
-          totalArrived: 0,
-          deadline: item.deadline,
-          inquiries: [],
-        };
-      }
 
-      // Non-null assertions or careful typing might be needed depending on your tsconfig
-      // but assuming standard strict mode, this should work if acc[key] is defined above
+      acc[key] ??= {
+        variantId: key,
+        fabricName: item.fabricName ?? "",
+        colorName: item.colorName ?? "",
+        title: `${item.fabricName ?? ""} - ${item.colorName ?? ""}`,
+        totalQty: 0,
+        totalArrived: 0,
+        deadline: item.deadline,
+        inquiries: [],
+      };
+
       const currentGroup = acc[key];
+
       if (currentGroup) {
         currentGroup.totalQty += item.quantity;
         currentGroup.totalArrived += item.arrivedQty ?? 0;
