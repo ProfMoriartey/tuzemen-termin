@@ -35,12 +35,24 @@ type InquiryData = {
 
 type SortOption = "fabric" | "color" | "seller";
 
-// 1. Create a dedicated Card Component to manage its own state
+// 1. Define the type for the grouped data
+type GroupedData = {
+  variantId: string;
+  fabricName: string;
+  colorName: string;
+  title: string;
+  totalQty: number;
+  totalArrived: number;
+  deadline: Date | null;
+  inquiries: InquiryData[];
+};
+
+// 2. Update GroupCard props to use the defined type
 function GroupCard({
   group,
   category,
 }: {
-  group: any;
+  group: GroupedData;
   category: "late" | "active" | "archive";
 }) {
   const [open, setOpen] = useState(false);
@@ -58,7 +70,7 @@ function GroupCard({
           deadlineDate,
           totalArrived,
         );
-        setOpen(false); // Close the dialog upon successful update
+        setOpen(false);
       } catch (error) {
         console.error(error);
       }
@@ -75,7 +87,7 @@ function GroupCard({
 
   const sortedInquiries = [...group.inquiries].sort(
     (a: InquiryData, b: InquiryData) =>
-      (a.sellerName || "").localeCompare(b.sellerName || ""),
+      (a.sellerName ?? "").localeCompare(b.sellerName ?? ""),
   );
 
   return (
@@ -169,7 +181,7 @@ function GroupCard({
   );
 }
 
-// 2. The Main List Component
+// 3. Update the main component to type the reduce accumulator and variables
 export function ProductionList({ data }: { data: InquiryData[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("fabric");
@@ -178,42 +190,50 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
-      item.fabricName?.toLowerCase().includes(query) ||
-      item.colorName?.toLowerCase().includes(query) ||
-      item.customerName.toLowerCase().includes(query) ||
+      item.fabricName?.toLowerCase().includes(query) ??
+      item.colorName?.toLowerCase().includes(query) ??
+      item.customerName.toLowerCase().includes(query) ??
       item.sellerName?.toLowerCase().includes(query)
     );
   });
 
-  const grouped = filteredData.reduce(
+  // Add the Record<string, GroupedData> type definition here
+  const grouped = filteredData.reduce<Record<string, GroupedData>>(
     (acc, item) => {
       const key = item.variantId ?? "unknown";
       if (!acc[key]) {
         acc[key] = {
           variantId: key,
-          fabricName: item.fabricName || "",
-          colorName: item.colorName || "",
-          title: `${item.fabricName} - ${item.colorName}`,
+          fabricName: item.fabricName ?? "",
+          colorName: item.colorName ?? "",
+          title: `${item.fabricName ?? ""} - ${item.colorName ?? ""}`,
           totalQty: 0,
           totalArrived: 0,
           deadline: item.deadline,
           inquiries: [],
         };
       }
-      acc[key].totalQty += item.quantity;
-      acc[key].totalArrived += item.arrivedQty ?? 0;
-      acc[key].inquiries.push(item);
+
+      // Non-null assertions or careful typing might be needed depending on your tsconfig
+      // but assuming standard strict mode, this should work if acc[key] is defined above
+      const currentGroup = acc[key];
+      if (currentGroup) {
+        currentGroup.totalQty += item.quantity;
+        currentGroup.totalArrived += item.arrivedQty ?? 0;
+        currentGroup.inquiries.push(item);
+      }
+
       return acc;
     },
-    {} as Record<string, any>,
+    {},
   );
 
   const sortedGroups = Object.values(grouped).sort((a, b) => {
     const getTopSeller = (inquiries: InquiryData[]) => {
       const sorted = [...inquiries].sort((x, y) =>
-        (x.sellerName || "").localeCompare(y.sellerName || ""),
+        (x.sellerName ?? "").localeCompare(y.sellerName ?? ""),
       );
-      return sorted[0]?.sellerName || "";
+      return sorted[0]?.sellerName ?? "";
     };
 
     if (sortBy === "seller") {
@@ -237,18 +257,21 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const lateGroups: any[] = [];
-  const activeGroups: any[] = [];
-  const archivedGroups: any[] = [];
+  // Explicitly type these arrays
+  const lateGroups: GroupedData[] = [];
+  const activeGroups: GroupedData[] = [];
+  const archivedGroups: GroupedData[] = [];
 
   sortedGroups.forEach((group) => {
     const isFulfilled = group.totalArrived >= group.totalQty;
     const hasDeadline = !!group.deadline;
-    const deadlineDate = hasDeadline ? new Date(group.deadline) : null;
+    const deadlineDate =
+      hasDeadline && group.deadline ? new Date(group.deadline) : null;
 
     if (deadlineDate) deadlineDate.setHours(0, 0, 0, 0);
 
-    const isLate = hasDeadline && deadlineDate! < today && !isFulfilled;
+    const isLate =
+      hasDeadline && deadlineDate && deadlineDate < today && !isFulfilled;
 
     if (isFulfilled) archivedGroups.push(group);
     else if (isLate) lateGroups.push(group);
