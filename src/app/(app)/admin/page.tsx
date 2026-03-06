@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { DeleteUserButton } from "~/components/admin/delete-user-button";
 
 export default async function AdminPage() {
   const allUsers = await db.query.users.findMany({
@@ -34,7 +35,10 @@ export default async function AdminPage() {
                 </TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <RoleSelect userId={user.id} currentRole={user.role} />
+                  <div className="flex items-center gap-4">
+                    <RoleSelect userId={user.id} currentRole={user.role} />
+                    <DeleteUserButton targetUserId={user.id} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
