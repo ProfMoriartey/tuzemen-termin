@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateGroupedInquiries } from "~/server/actions/manager";
+import { updateDesignStatus } from "~/server/actions/manager";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Search } from "lucide-react";
@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import { Checkbox } from "~/components/ui/checkbox";
 import { format } from "date-fns";
 
 type InquiryData = {
@@ -35,7 +36,6 @@ type InquiryData = {
 
 type SortOption = "fabric" | "color" | "seller";
 
-// 1. Define the type for the grouped data
 type GroupedData = {
   variantId: string;
   fabricName: string;
@@ -47,7 +47,6 @@ type GroupedData = {
   inquiries: InquiryData[];
 };
 
-// 2. Update GroupCard props to use the defined type
 function GroupCard({
   group,
   category,
@@ -63,13 +62,9 @@ function GroupCard({
       try {
         const rawDate = formData.get("deadline") as string;
         const deadlineDate = rawDate ? new Date(rawDate) : null;
-        const totalArrived = Number(formData.get("totalArrived")) || 0;
+        const isFulfilled = formData.get("isFulfilled") === "on";
 
-        await updateGroupedInquiries(
-          group.variantId,
-          deadlineDate,
-          totalArrived,
-        );
+        await updateDesignStatus(group.variantId, deadlineDate, isFulfilled);
         setOpen(false);
       } catch (error) {
         console.error(error);
@@ -100,7 +95,7 @@ function GroupCard({
             <div>
               <h2 className="text-base font-bold sm:text-lg">{group.title}</h2>
               <p className="text-sm font-medium text-slate-600">
-                Arrived: {group.totalArrived} / {group.totalQty} MT
+                Total Required: {group.totalQty} MT
               </p>
             </div>
             <div className="text-sm font-medium text-slate-500">
@@ -133,55 +128,53 @@ function GroupCard({
                   </span>
                 </div>
                 <div className="font-medium text-slate-800">
-                  {inquiry.arrivedQty ?? 0} / {inquiry.quantity} MT
+                  {inquiry.quantity} MT
                 </div>
               </div>
             ))}
           </div>
 
-          <form
-            action={handleBatchUpdate}
-            className="flex flex-col gap-3 rounded-md border bg-slate-50 p-4 sm:flex-row sm:items-end"
-          >
-            <label className="flex flex-1 flex-col gap-1 text-xs font-medium">
-              Batch Deadline
-              <Input
-                type="date"
-                name="deadline"
-                defaultValue={
-                  group.deadline
-                    ? new Date(group.deadline).toISOString().split("T")[0]
-                    : ""
-                }
-              />
-            </label>
-
-            <label className="flex flex-1 flex-col gap-1 text-xs font-medium">
-              Total Arrived (MT)
-              <Input
-                type="number"
-                name="totalArrived"
-                defaultValue={group.totalArrived}
-                min="0"
-              />
-            </label>
-
-            <Button
-              type="submit"
-              disabled={isPending}
-              size="sm"
-              className="mt-2 sm:mt-0"
+          {category !== "archive" && (
+            <form
+              action={handleBatchUpdate}
+              className="flex flex-col gap-4 rounded-md border bg-slate-50 p-4"
             >
-              {isPending ? "Saving..." : "Save Batch"}
-            </Button>
-          </form>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+                <label className="flex flex-1 flex-col gap-1 text-xs font-medium">
+                  Set Deadline
+                  <Input
+                    type="date"
+                    name="deadline"
+                    defaultValue={
+                      group.deadline
+                        ? new Date(group.deadline).toISOString().split("T")[0]
+                        : ""
+                    }
+                  />
+                </label>
+
+                <div className="flex flex-1 items-center space-x-2 pb-2">
+                  <Checkbox id="isFulfilled" name="isFulfilled" />
+                  <label
+                    htmlFor="isFulfilled"
+                    className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Mark as Fulfilled
+                  </label>
+                </div>
+
+                <Button type="submit" disabled={isPending} size="sm">
+                  {isPending ? "Saving..." : "Save"}
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </DialogContent>
     </Dialog>
   );
 }
 
-// 3. Update the main component to type the reduce accumulator and variables
 export function ProductionList({ data }: { data: InquiryData[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("fabric");
@@ -190,16 +183,22 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
-      item.fabricName?.toLowerCase().includes(query) ??
-      item.colorName?.toLowerCase().includes(query) ??
-      item.customerName.toLowerCase().includes(query) ??
+      item.fabricName?.toLowerCase().includes(query) ||
+      item.colorName?.toLowerCase().includes(query) ||
+      item.customerName.toLowerCase().includes(query) ||
       item.sellerName?.toLowerCase().includes(query)
     );
   });
 
-  // Add the Record<string, GroupedData> type definition here
-  const grouped = filteredData.reduce<Record<string, GroupedData>>(
-    (acc, item) => {
+  const activeItems = filteredData.filter(
+    (item) => (item.arrivedQty ?? 0) < item.quantity,
+  );
+  const archivedItems = filteredData.filter(
+    (item) => (item.arrivedQty ?? 0) >= item.quantity,
+  );
+
+  function createGroups(items: InquiryData[]) {
+    const grouped = items.reduce<Record<string, GroupedData>>((acc, item) => {
       const key = item.variantId ?? "unknown";
 
       acc[key] ??= {
@@ -222,57 +221,54 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
       }
 
       return acc;
-    },
-    {},
-  );
+    }, {});
 
-  const sortedGroups = Object.values(grouped).sort((a, b) => {
-    const getTopSeller = (inquiries: InquiryData[]) => {
-      const sorted = [...inquiries].sort((x, y) =>
-        (x.sellerName ?? "").localeCompare(y.sellerName ?? ""),
-      );
-      return sorted[0]?.sellerName ?? "";
-    };
+    return Object.values(grouped).sort((a, b) => {
+      const getTopSeller = (inquiries: InquiryData[]) => {
+        const sorted = [...inquiries].sort((x, y) =>
+          (x.sellerName ?? "").localeCompare(y.sellerName ?? ""),
+        );
+        return sorted[0]?.sellerName ?? "";
+      };
 
-    if (sortBy === "seller") {
-      const sellerA = getTopSeller(a.inquiries);
-      const sellerB = getTopSeller(b.inquiries);
-      const sellerCompare = sellerA.localeCompare(sellerB);
-      if (sellerCompare !== 0) return sellerCompare;
-    }
+      if (sortBy === "seller") {
+        const sellerA = getTopSeller(a.inquiries);
+        const sellerB = getTopSeller(b.inquiries);
+        const sellerCompare = sellerA.localeCompare(sellerB);
+        if (sellerCompare !== 0) return sellerCompare;
+      }
 
-    if (sortBy === "color") {
-      const colorCompare = a.colorName.localeCompare(b.colorName);
-      if (colorCompare !== 0) return colorCompare;
-      return a.fabricName.localeCompare(b.fabricName);
-    }
+      if (sortBy === "color") {
+        const colorCompare = a.colorName.localeCompare(b.colorName);
+        if (colorCompare !== 0) return colorCompare;
+        return a.fabricName.localeCompare(b.fabricName);
+      }
 
-    const fabricCompare = a.fabricName.localeCompare(b.fabricName);
-    if (fabricCompare !== 0) return fabricCompare;
-    return a.colorName.localeCompare(b.colorName);
-  });
+      const fabricCompare = a.fabricName.localeCompare(b.fabricName);
+      if (fabricCompare !== 0) return fabricCompare;
+      return a.colorName.localeCompare(b.colorName);
+    });
+  }
+
+  const sortedActiveGroups = createGroups(activeItems);
+  const sortedArchivedGroups = createGroups(archivedItems);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Explicitly type these arrays
   const lateGroups: GroupedData[] = [];
   const activeGroups: GroupedData[] = [];
-  const archivedGroups: GroupedData[] = [];
 
-  sortedGroups.forEach((group) => {
-    const isFulfilled = group.totalArrived >= group.totalQty;
+  sortedActiveGroups.forEach((group) => {
     const hasDeadline = !!group.deadline;
     const deadlineDate =
       hasDeadline && group.deadline ? new Date(group.deadline) : null;
 
     if (deadlineDate) deadlineDate.setHours(0, 0, 0, 0);
 
-    const isLate =
-      hasDeadline && deadlineDate && deadlineDate < today && !isFulfilled;
+    const isLate = hasDeadline && deadlineDate && deadlineDate < today;
 
-    if (isFulfilled) archivedGroups.push(group);
-    else if (isLate) lateGroups.push(group);
+    if (isLate) lateGroups.push(group);
     else activeGroups.push(group);
   });
 
@@ -304,7 +300,7 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
         </Select>
       </div>
 
-      {sortedGroups.length === 0 && (
+      {sortedActiveGroups.length === 0 && sortedArchivedGroups.length === 0 && (
         <p className="text-slate-500">No orders match your search.</p>
       )}
 
@@ -326,12 +322,12 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
         </div>
       )}
 
-      {archivedGroups.length > 0 && (
+      {sortedArchivedGroups.length > 0 && (
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold text-green-700">
             Archive (Fulfilled)
           </h3>
-          {archivedGroups.map((group) => (
+          {sortedArchivedGroups.map((group) => (
             <GroupCard key={group.variantId} group={group} category="archive" />
           ))}
         </div>
