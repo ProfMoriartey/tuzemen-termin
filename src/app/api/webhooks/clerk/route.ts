@@ -3,6 +3,7 @@ import { headers } from "next/headers"
 import type { WebhookEvent } from "@clerk/nextjs/server"
 import { db } from "~/server/db"
 import { users } from "~/server/db/schema"
+import { eq } from "drizzle-orm"
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -20,8 +21,7 @@ export async function POST(req: Request) {
     return new Response("Missing svix headers", { status: 400 })
   }
 
- const payload = (await req.json()) as unknown
-const body = JSON.stringify(payload)
+  const body = await req.text()
   const wh = new Webhook(WEBHOOK_SECRET)
   
   let evt: WebhookEvent
@@ -49,6 +49,24 @@ const body = JSON.stringify(payload)
       name,
       role: "PENDING"
     })
+  }
+
+  if (eventType === "user.updated") {
+    const { id, first_name, last_name } = evt.data
+    const name = `${first_name ?? ""} ${last_name ?? ""}`.trim()
+
+    await db
+      .update(users)
+      .set({ name })
+      .where(eq(users.id, id))
+  }
+
+  if (eventType === "user.deleted") {
+    const { id } = evt.data
+    
+    if (id) {
+      await db.delete(users).where(eq(users.id, id))
+    }
   }
 
   return new Response("Success", { status: 200 })

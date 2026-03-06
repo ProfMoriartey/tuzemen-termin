@@ -1,37 +1,91 @@
+import { auth } from "@clerk/nextjs/server";
+import { db } from "~/server/db";
+import { users } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
+import { SignInButton } from "@clerk/nextjs";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { userId } = await auth();
+  let role = null;
+
+  if (userId) {
+    const userRecord = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+    });
+    role = userRecord?.role;
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4">
+      <div className="text-center">
+        <h1 className="mb-4 text-4xl font-bold text-slate-900">
+          Welcome to Tuzemen
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
+
+        {!userId ? (
+          <>
+            <p className="mb-8 text-lg text-slate-600">
+              Please sign in to access the system.
+            </p>
+            <SignInButton mode="modal">
+              <Button size="lg" className="text-lg">
+                Sign In
+              </Button>
+            </SignInButton>
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-4">
+            <p className="mb-4 text-lg text-slate-600">
+              You are securely signed in.
+            </p>
+
+            <div className="flex flex-col gap-4 sm:flex-row">
+              {(role === "SELLER" ||
+                role === "MANAGER" ||
+                role === "DEVELOPER") && (
+                <Link href="/seller">
+                  <Button size="lg" className="w-full text-lg sm:w-auto">
+                    Seller Dashboard
+                  </Button>
+                </Link>
+              )}
+
+              {(role === "MANAGER" || role === "DEVELOPER") && (
+                <Link href="/manager">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="w-full border border-slate-200 text-lg sm:w-auto"
+                  >
+                    Manager Dashboard
+                  </Button>
+                </Link>
+              )}
+
+              {role === "DEVELOPER" && (
+                <Link href="/admin">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full text-lg sm:w-auto"
+                  >
+                    Admin Dashboard
+                  </Button>
+                </Link>
+              )}
+
+              {role === "PENDING" && (
+                <p className="rounded-md border border-yellow-200 bg-yellow-50 p-4 text-sm font-medium text-yellow-800">
+                  Your account is pending approval. Please contact an
+                  administrator to assign your role.
+                </p>
+              )}
             </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
+          </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }
