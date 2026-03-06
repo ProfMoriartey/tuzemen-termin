@@ -12,6 +12,8 @@ import {
 import { Input } from "~/components/ui/input";
 import { Search } from "lucide-react";
 
+import { DeleteInquiryButton } from "~/components/seller/delete-inquiry-button";
+
 type SellerInquiry = {
   id: string;
   fabricName: string | null;
@@ -104,11 +106,14 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
               Customer: {inquiry.customerName}
             </p>
           </div>
-          <span
-            className={`rounded-full px-2 py-1 text-xs font-medium ${badgeColor}`}
-          >
-            {statusText}
-          </span>
+          <div className="flex items-center gap-2">
+            <span
+              className={`rounded-full px-2 py-1 text-xs font-medium ${badgeColor}`}
+            >
+              {statusText}
+            </span>
+            <DeleteInquiryButton inquiryId={inquiry.id} />
+          </div>
         </div>
 
         <div className="mt-2 flex items-center justify-between text-sm">

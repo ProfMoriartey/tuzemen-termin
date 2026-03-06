@@ -5,6 +5,7 @@ import { inquiries } from "~/server/db/schema"
 import { revalidatePath } from "next/cache"
 import { auth } from "@clerk/nextjs/server"
 import { z } from "zod"
+import { eq } from "drizzle-orm"
 
 const inquirySchema = z.object({
   variantId: z.string().uuid(),
@@ -31,4 +32,16 @@ export async function createInquiryAction(formData: FormData) {
   })
 
   revalidatePath("/")
+}
+
+export async function deleteInquiry(inquiryId: string) {
+  const { userId } = await auth()
+  
+  if (!userId) throw new Error("Unauthorized")
+
+  await db.delete(inquiries).where(eq(inquiries.id, inquiryId))
+
+  revalidatePath("/seller")
+  revalidatePath("/manager")
+  revalidatePath("/calendar")
 }
