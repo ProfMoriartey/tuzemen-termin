@@ -1,0 +1,1 @@
+ALTER TABLE "inquiries" ADD COLUMN "last_alert_at" timestamp;

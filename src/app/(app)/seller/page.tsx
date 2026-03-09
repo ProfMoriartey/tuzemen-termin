@@ -30,6 +30,7 @@ export default async function SellerDashboard() {
       deadline: inquiries.deadline,
       status: inquiries.status,
       newBatchAlert: inquiries.newBatchAlert,
+      lastAlertAt: inquiries.lastAlertAt,
       arrivedQty: inquiries.arrivedQty, // Kept to match your existing data
       fabricName: fabrics.name,
       colorName: variants.colorName,

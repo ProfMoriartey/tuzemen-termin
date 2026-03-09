@@ -1,6 +1,6 @@
 import { db } from "~/server/db";
 import { inquiries, fabrics, variants } from "~/server/db/schema";
-import { isNotNull, eq } from "drizzle-orm";
+import { isNotNull, eq, and, not } from "drizzle-orm";
 import { CalendarView } from "~/components/calendar/calendar-view";
 import { requireRoles } from "~/server/check-role";
 
@@ -11,16 +11,18 @@ export default async function CalendarPage() {
     .select({
       id: inquiries.id,
       quantity: inquiries.quantity,
-      arrivedQty: inquiries.arrivedQty,
       customerName: inquiries.customerName,
       deadline: inquiries.deadline,
+      status: inquiries.status,
       fabricName: fabrics.name,
       colorName: variants.colorName,
     })
     .from(inquiries)
     .leftJoin(variants, eq(inquiries.variantId, variants.id))
     .leftJoin(fabrics, eq(variants.fabricId, fabrics.id))
-    .where(isNotNull(inquiries.deadline));
+    .where(
+      and(isNotNull(inquiries.deadline), not(eq(inquiries.status, "arrived"))),
+    );
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col p-4 pt-8">

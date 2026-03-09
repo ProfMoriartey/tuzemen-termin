@@ -12,7 +12,10 @@ export async function notifyNewBatch(variantId: string) {
 
   await db
     .update(inquiries)
-    .set({ newBatchAlert: true })
+    .set({ 
+      newBatchAlert: true,
+      lastAlertAt: new Date()
+    })
     .where(
       and(
         eq(inquiries.variantId, variantId),

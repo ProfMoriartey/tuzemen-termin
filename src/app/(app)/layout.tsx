@@ -10,7 +10,7 @@ export default async function AppLayout({
   const { userId } = await auth();
 
   if (!userId) {
-    redirect("/sign-in");
+    redirect("/");
   }
 
   const dbUser = await db.query.users.findFirst({

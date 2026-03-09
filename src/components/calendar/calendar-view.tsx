@@ -23,9 +23,9 @@ import {
 type CalendarItem = {
   id: string;
   quantity: number;
-  arrivedQty: number | null;
   customerName: string;
   deadline: Date | null;
+  status: string | null;
   fabricName: string | null;
   colorName: string | null;
 };
@@ -115,16 +115,12 @@ export function CalendarView({ data }: { data: CalendarItem[] }) {
 
               <div className="flex w-full flex-1 flex-col gap-1 overflow-hidden">
                 {dayItems.slice(0, 3).map((item) => {
-                  const arrived = item.arrivedQty ?? 0;
-                  const isFulfilled = arrived >= item.quantity;
-                  const isLate = !isFulfilled && day < today;
+                  const isLate = day < today;
 
                   let itemStyle =
                     "bg-yellow-100 text-yellow-800 border-yellow-200";
 
-                  if (isFulfilled) {
-                    itemStyle = "bg-green-100 text-green-800 border-green-200";
-                  } else if (isLate) {
+                  if (isLate) {
                     itemStyle = "bg-red-100 text-red-800 border-red-200";
                   }
 
@@ -165,18 +161,12 @@ export function CalendarView({ data }: { data: CalendarItem[] }) {
               </p>
             ) : (
               selectedDayItems.map((item) => {
-                const arrived = item.arrivedQty ?? 0;
-                const isFulfilled = arrived >= item.quantity;
-                const isLate =
-                  !isFulfilled && selectedDay && selectedDay < today;
+                const isLate = selectedDay && selectedDay < today;
 
                 let badgeStyle = "bg-yellow-100 text-yellow-800";
                 let statusText = "Pending";
 
-                if (isFulfilled) {
-                  badgeStyle = "bg-green-100 text-green-800";
-                  statusText = "Fulfilled";
-                } else if (isLate) {
+                if (isLate) {
                   badgeStyle = "bg-red-100 text-red-800";
                   statusText = "Late";
                 }

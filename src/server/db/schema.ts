@@ -24,6 +24,7 @@ export const inquiries = pgTable("inquiries", {
   arrivedQty: integer("arrived_qty").default(0),
   createdAt: timestamp("created_at").defaultNow(),
   newBatchAlert: boolean("new_batch_alert").default(false),
+  lastAlertAt: timestamp("last_alert_at", { mode: "date" }),
 });
 
 export const users = pgTable("users", {
