@@ -111,7 +111,7 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
               {inquiry.fabricName} - {inquiry.colorName}
             </h3>
             <p className="text-sm font-medium text-slate-600">
-              Customer: {inquiry.customerName} | Seller: {inquiry.sellerName}
+              Müşteri: {inquiry.customerName} | Satıcı: {inquiry.sellerName}
             </p>
           </div>
 
@@ -134,7 +134,7 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
               ) : (
                 <Circle className="mr-2 h-4 w-4" />
               )}
-              {isArchived ? "Fulfilled" : "Mark Fulfilled"}
+              {isArchived ? "Tamamlandı" : "İşaretle"}
             </Button>
 
             <DeleteInquiryButton inquiryId={inquiry.id} />
@@ -143,21 +143,21 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
 
         <div className="mt-2 flex items-center justify-between text-sm">
           <div>
-            <span className="block text-slate-500">Required</span>
+            <span className="block text-slate-500">Gerekli miktar</span>
             <span className="font-bold">{inquiry.quantity} MT</span>
           </div>
           <div className="flex flex-col items-end gap-1 text-right">
-            <span className="block text-slate-500">Deadline</span>
+            <span className="block text-slate-500">Termin</span>
             <span className="font-medium">
               {inquiry.deadline
                 ? format(new Date(inquiry.deadline), "MMM d, yyyy")
-                : "Not set"}
+                : "Belirtilmedi"}
             </span>
             {isAlertActive && inquiry.lastAlertAt && (
               <div className="mt-1 flex flex-col items-end gap-1 rounded-md bg-blue-100 px-3 py-1.5 text-xs font-bold text-blue-800">
-                <span>Check Stock - New Batch Arrived</span>
+                <span>Stoku Kontrol Et - Yeni Lot Geldi</span>
                 <span className="text-[10px] font-medium opacity-80">
-                  Alerted:{" "}
+                  Uyarıldı:{" "}
                   {format(new Date(inquiry.lastAlertAt), "MMM d, h:mm a")}
                 </span>
               </div>
@@ -174,7 +174,7 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
         <div className="relative flex-1">
           <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-slate-500" />
           <Input
-            placeholder="Search fabric, color, customer, or seller..."
+            placeholder="Kumaş, renk, müşteri veya satıcıyı ara..."
             className="pl-9"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -186,13 +186,13 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
           onValueChange={(value) => setSortBy(value as SortOption)}
         >
           <SelectTrigger className="w-full sm:w-50">
-            <SelectValue placeholder="Sort by..." />
+            <SelectValue placeholder="Sırala..." />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="fabric">Fabric Name</SelectItem>
-            <SelectItem value="seller">Issuing Name (Seller)</SelectItem>
-            <SelectItem value="customer">Customer Name</SelectItem>
-            <SelectItem value="date">Delivery Date</SelectItem>
+            <SelectItem value="fabric">Kumaş Adı</SelectItem>
+            <SelectItem value="seller">Düzenleyen Adı (Seller)</SelectItem>
+            <SelectItem value="customer">Müşteri Adı</SelectItem>
+            <SelectItem value="date">Teslim Tarihi</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -200,13 +200,13 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
       <div className="flex flex-col gap-4">
         {activeInquiries.map((item) => renderCard(item, false))}
         {activeInquiries.length === 0 && (
-          <p className="text-slate-500">No active orders found.</p>
+          <p className="text-slate-500">Aktif sipariş bulunamadı.</p>
         )}
       </div>
 
       {archivedInquiries.length > 0 && (
         <div className="mt-8 flex flex-col gap-4 border-t pt-8">
-          <h3 className="text-xl font-bold text-slate-600">Archive</h3>
+          <h3 className="text-xl font-bold text-slate-600">Arşiv</h3>
           {archivedInquiries.map((item) => renderCard(item, true))}
         </div>
       )}

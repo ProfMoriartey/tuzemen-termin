@@ -26,7 +26,7 @@ export default async function CalendarPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col p-4 pt-8">
-      <h1 className="mb-6 text-2xl font-bold">Production Calendar</h1>
+      <h1 className="mb-6 text-2xl font-bold">Üretim Takvimi</h1>
       <CalendarView data={scheduledInquiries} />
     </div>
   );

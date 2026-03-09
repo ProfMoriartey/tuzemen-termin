@@ -6,8 +6,8 @@ export default function WaitingPage() {
       <div className="w-full max-w-md rounded-lg border p-6 shadow-sm">
         <h1 className="mb-4 text-2xl font-semibold">Account Pending</h1>
         <p className="mb-8 text-slate-600">
-          Your account requires developer approval. Please check back later or
-          contact the team.
+          Hesabınız için geliştirici onayı gerekiyor. Lütfen daha sonra tekrar
+          kontrol edin veya ekiple iletişime geçin.
         </p>
         <UserButton />
       </div>

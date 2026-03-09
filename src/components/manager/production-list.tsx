@@ -61,7 +61,7 @@ function GroupCard({ group }: { group: GroupedData }) {
         <div>
           <h2 className="text-lg font-bold">{group.title}</h2>
           <p className="text-sm font-medium text-slate-500">
-            Total Required: {group.totalQty} MT
+            Miktar: {group.totalQty} MT
           </p>
         </div>
         <Button
@@ -72,12 +72,12 @@ function GroupCard({ group }: { group: GroupedData }) {
           {isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Notifying...
+              Bildirim Gönderiliyor...
             </>
           ) : (
             <>
               <Bell className="mr-2 h-4 w-4" />
-              New Batch Arrived
+              Yeni Lot Geldi
             </>
           )}
         </Button>
@@ -92,7 +92,7 @@ function GroupCard({ group }: { group: GroupedData }) {
             <div>
               <span className="block font-semibold">{inquiry.sellerName}</span>
               <span className="text-slate-500">
-                Customer: {inquiry.customerName}
+                Müşteri: {inquiry.customerName}
               </span>
             </div>
             <div className="font-medium text-slate-800">
@@ -125,7 +125,7 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
 
   const grouped = activeItems.reduce<Record<string, GroupedData>>(
     (acc, item) => {
-      const key = item.variantId ?? "unknown";
+      const key = item.variantId ?? "Bilinmiyor";
 
       acc[key] ??= {
         variantId: key,
@@ -192,7 +192,7 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
         <div className="relative flex-1">
           <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-slate-500" />
           <Input
-            placeholder="Search fabric, color, customer, or seller..."
+            placeholder="Kumaş, renk, müşteri veya satıcı ara..."
             className="pl-9"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -204,20 +204,20 @@ export function ProductionList({ data }: { data: InquiryData[] }) {
           onValueChange={(value) => setSortBy(value as SortOption)}
         >
           <SelectTrigger className="w-full sm:w-50">
-            <SelectValue placeholder="Sort by..." />
+            <SelectValue placeholder="Sırala..." />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="fabric">Fabric Name</SelectItem>
-            <SelectItem value="seller">Issuing Name (Seller)</SelectItem>
-            <SelectItem value="customer">Customer Name</SelectItem>
-            <SelectItem value="date">Delivery Date</SelectItem>
+            <SelectItem value="fabric">Kumaş Adı</SelectItem>
+            <SelectItem value="seller">Düzenleyen Adı</SelectItem>
+            <SelectItem value="customer">Müşteri Adı</SelectItem>
+            <SelectItem value="date">Teslim Tarihi</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       {sortedGroups.length === 0 ? (
         <p className="text-slate-500">
-          No active production items match your search.
+          Aramanızla eşleşen aktif üretim öğesi bulunamadı.
         </p>
       ) : (
         <div className="flex flex-col gap-4">

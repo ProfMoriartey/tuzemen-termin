@@ -21,24 +21,24 @@ export default async function HomePage() {
     <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4">
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-bold text-slate-900">
-          Welcome to Tuzemen Termin System
+          Tuzemen Termin Sistemine Hoş Geldiniz
         </h1>
 
         {!userId ? (
           <>
             <p className="mb-8 text-lg text-slate-600">
-              Please sign in to access the system.
+              Sisteme erişmek için lütfen giriş yapın.
             </p>
             <SignInButton mode="modal">
               <Button size="lg" className="text-lg">
-                Sign In
+                Giriş Yap
               </Button>
             </SignInButton>
           </>
         ) : (
           <div className="flex flex-col items-center gap-4">
             <p className="mb-4 text-lg text-slate-600">
-              You are securely signed in.
+              Güvenli bir şekilde giriş yaptınız.
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row">
@@ -47,7 +47,7 @@ export default async function HomePage() {
                 role === "DEVELOPER") && (
                 <Link href="/calendar">
                   <Button size="lg" className="w-full text-lg sm:w-auto">
-                    Calendar
+                    Takvim
                   </Button>
                 </Link>
               )}
@@ -57,7 +57,7 @@ export default async function HomePage() {
                 role === "DEVELOPER") && (
                 <Link href="/seller">
                   <Button size="lg" className="w-full text-lg sm:w-auto">
-                    Seller Dashboard
+                    Satıcı Paneli
                   </Button>
                 </Link>
               )}
@@ -68,7 +68,7 @@ export default async function HomePage() {
                     size="lg"
                     className="w-full border border-slate-200 text-lg sm:w-auto"
                   >
-                    Manager Dashboard
+                    Yönetici Paneli
                   </Button>
                 </Link>
               )}
@@ -83,8 +83,8 @@ export default async function HomePage() {
 
               {role === "PENDING" && (
                 <p className="rounded-md border border-yellow-200 bg-yellow-50 p-4 text-sm font-medium text-yellow-800">
-                  Your account is pending approval. Please contact an
-                  administrator to assign your role.
+                  Hesabınız onay bekliyor. Lütfen rolünüzü ataması için bir
+                  yönetici ile iletişime geçin.
                 </p>
               )}
             </div>

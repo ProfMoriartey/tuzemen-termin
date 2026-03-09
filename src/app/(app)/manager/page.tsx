@@ -33,7 +33,7 @@ export default async function ManagerPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col p-4 pt-8">
-      <h1 className="mb-6 text-2xl font-bold">Production Dashboard</h1>
+      <h1 className="mb-6 text-2xl font-bold">Yönetici Paneli</h1>
       <ProductionList data={rawData} />
     </div>
   );

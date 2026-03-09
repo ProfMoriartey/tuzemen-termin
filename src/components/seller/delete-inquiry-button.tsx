@@ -43,10 +43,10 @@ export function DeleteInquiryButton({ inquiryId }: { inquiryId: string }) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Inquiry?</AlertDialogTitle>
+          <AlertDialogTitle>Talebi sil?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently remove the
-            inquiry from the production schedule.
+            Bu işlem geri alınamaz. Bu, talebi üretim planından kalıcı olarak
+            kaldıracaktır.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

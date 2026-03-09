@@ -45,12 +45,12 @@ export default async function SellerDashboard() {
   return (
     <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-8 p-4 pt-8 md:flex-row">
       <div className="hidden w-full md:block md:w-1/3">
-        <h2 className="mb-4 text-xl font-bold">New Inquiry</h2>
+        <h2 className="mb-4 text-xl font-bold">Yeni Talep</h2>
         <InquiryForm fabrics={allFabrics} variants={allVariants} />
       </div>
 
       <div className="w-full pb-24 md:w-2/3 md:pb-0">
-        <h2 className="mb-4 text-xl font-bold">All Orders</h2>
+        <h2 className="mb-4 text-xl font-bold">Tüm Siparişler</h2>
         <InquiryList inquiries={allInquiries} />
       </div>
 
@@ -63,7 +63,7 @@ export default async function SellerDashboard() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-106.25">
             <DialogHeader>
-              <DialogTitle>New Production Inquiry</DialogTitle>
+              <DialogTitle>Yeni Termin Talebi</DialogTitle>
             </DialogHeader>
             <InquiryForm fabrics={allFabrics} variants={allVariants} />
           </DialogContent>

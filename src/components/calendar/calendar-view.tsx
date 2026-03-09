@@ -78,7 +78,7 @@ export function CalendarView({ data }: { data: CalendarItem[] }) {
       </div>
 
       <div className="grid grid-cols-7 gap-2 md:gap-4">
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+        {["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cts"].map((day) => (
           <div
             key={day}
             className="text-center text-sm font-bold text-slate-500"
@@ -157,18 +157,18 @@ export function CalendarView({ data }: { data: CalendarItem[] }) {
           <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto pt-2 pr-2">
             {selectedDayItems.length === 0 ? (
               <p className="text-slate-500">
-                No production scheduled for this day.
+                Bu gün için planlanmış üretim yok.
               </p>
             ) : (
               selectedDayItems.map((item) => {
                 const isLate = selectedDay && selectedDay < today;
 
                 let badgeStyle = "bg-yellow-100 text-yellow-800";
-                let statusText = "Pending";
+                let statusText = "Beklemede";
 
                 if (isLate) {
                   badgeStyle = "bg-red-100 text-red-800";
-                  statusText = "Late";
+                  statusText = "Gecikmiş";
                 }
 
                 return (
@@ -182,7 +182,7 @@ export function CalendarView({ data }: { data: CalendarItem[] }) {
                           {item.fabricName} - {item.colorName}
                         </h3>
                         <p className="text-sm text-slate-500">
-                          Customer: {item.customerName}
+                          Müşteri: {item.customerName}
                         </p>
                       </div>
                       <span
@@ -192,7 +192,7 @@ export function CalendarView({ data }: { data: CalendarItem[] }) {
                       </span>
                     </div>
                     <div className="text-sm font-medium">
-                      Quantity Required: {item.quantity} MT
+                      Miktar: {item.quantity} MT
                     </div>
                   </div>
                 );

@@ -44,7 +44,7 @@ export function InquiryForm({
       className="mx-auto flex w-full max-w-md flex-col gap-4 rounded-lg border p-4 shadow-sm"
     >
       <label className="flex flex-col gap-1 text-sm font-medium">
-        Fabric
+        Kumaş
         <select
           className="border-input bg-background ring-offset-background focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           value={selectedFabric}
@@ -52,7 +52,7 @@ export function InquiryForm({
           required
         >
           <option value="" disabled>
-            Select a fabric
+            Kumaş seçin
           </option>
           {fabrics.map((f) => (
             <option key={f.id} value={f.id}>
@@ -63,7 +63,7 @@ export function InquiryForm({
       </label>
 
       <label className="flex flex-col gap-1 text-sm font-medium">
-        Color
+        Renk
         <select
           name="variantId"
           className="border-input bg-background ring-offset-background focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
@@ -71,7 +71,7 @@ export function InquiryForm({
           required
         >
           <option value="" disabled>
-            Select a color
+            renk seçin
           </option>
           {filteredVariants.map((v) => (
             <option key={v.id} value={v.id}>
@@ -82,23 +82,23 @@ export function InquiryForm({
       </label>
 
       <label className="flex flex-col gap-1 text-sm font-medium">
-        Customer Name
-        <Input name="customerName" placeholder="Enter customer name" required />
+        Müşteri Adı
+        <Input name="customerName" placeholder="Müşteri adını girin" required />
       </label>
 
       <label className="flex flex-col gap-1 text-sm font-medium">
-        Quantity (MT)
+        Miktar (MT)
         <Input
           type="number"
           name="quantity"
           min="1"
-          placeholder="Amount in meters"
+          placeholder="Metre cinsinden miktar"
           required
         />
       </label>
 
       <Button type="submit" disabled={isPending} className="mt-2 w-full">
-        {isPending ? "Submitting..." : "Submit Inquiry"}
+        {isPending ? "Gönderiliyor..." : "Talep Gönder"}
       </Button>
     </form>
   );
