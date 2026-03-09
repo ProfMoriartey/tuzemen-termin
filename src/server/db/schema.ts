@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, pgEnum, uuid, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, pgEnum, uuid, boolean, varchar } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["PENDING", "SELLER", "MANAGER", "DEVELOPER"]);
 
@@ -31,5 +31,6 @@ export const users = pgTable("users", {
   id: text("id").primaryKey(), // Clerk ID
   email: text("email").notNull(),
   role: roleEnum("role").default("PENDING").notNull(),
+  username: varchar("username"),
   name: text("name"),
 });

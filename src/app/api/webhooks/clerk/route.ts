@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   const eventType = evt.type
 
   if (eventType === "user.created") {
-    const { id, email_addresses, first_name, last_name } = evt.data
+    const { id, email_addresses, first_name, last_name, username } = evt.data
     const email = email_addresses[0]?.email_address ?? ""
     const name = `${first_name ?? ""} ${last_name ?? ""}`.trim()
 
@@ -47,17 +47,18 @@ export async function POST(req: Request) {
       id,
       email,
       name,
+      username,
       role: "PENDING"
     })
   }
 
   if (eventType === "user.updated") {
-    const { id, first_name, last_name } = evt.data
+    const { id, first_name, last_name, username } = evt.data
     const name = `${first_name ?? ""} ${last_name ?? ""}`.trim()
 
     await db
       .update(users)
-      .set({ name })
+      .set({ name, username })
       .where(eq(users.id, id))
   }
 

@@ -1,57 +1,40 @@
-import { db } from "~/server/db";
-import { RoleSelect } from "../../../components/admin/role-select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
-import { DeleteUserButton } from "~/components/admin/delete-user-button";
 import { requireRoles } from "~/server/check-role";
-import { auth } from "@clerk/nextjs/server";
+import { db } from "~/server/db";
+import { RoleSelect } from "~/components/admin/role-select";
+import { DeleteUserButton } from "~/components/admin/delete-user-button";
 
 export default async function AdminPage() {
   await requireRoles(["DEVELOPER"]);
 
-  const { userId } = await auth();
-
-  if (!userId) throw new Error("Unauthorized");
-
-  const allUsers = await db.query.users.findMany({
-    orderBy: (users, { desc }) => desc(users.role),
-  });
+  const allUsers = await db.query.users.findMany();
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="mx-auto flex w-full max-w-4xl flex-col p-4 pt-8">
       <h1 className="mb-6 text-2xl font-bold">User Management</h1>
-      <div className="w-full overflow-x-auto rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">
-                  {user.name ?? "No Name"}
-                </TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-4">
-                    <RoleSelect userId={user.id} currentRole={user.role} />
-                    <DeleteUserButton targetUserId={user.id} />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+
+      <div className="flex flex-col gap-4">
+        {allUsers.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center justify-between rounded-lg border bg-white p-4 shadow-sm"
+          >
+            <div>
+              <p className="font-bold">
+                {user.name}
+                {user.username && (
+                  <span className="ml-2 text-sm font-normal text-slate-500">
+                    @{user.username}
+                  </span>
+                )}
+              </p>
+              <p className="text-sm text-slate-500">{user.email}</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <RoleSelect userId={user.id} currentRole={user.role} />
+              <DeleteUserButton targetUserId={user.id} />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
