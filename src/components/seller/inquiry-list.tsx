@@ -49,9 +49,9 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
-      item.fabricName?.toLowerCase().includes(query) ||
-      item.colorName?.toLowerCase().includes(query) ||
-      item.customerName.toLowerCase().includes(query) ||
+      item.fabricName?.toLowerCase().includes(query) ??
+      item.colorName?.toLowerCase().includes(query) ??
+      item.customerName.toLowerCase().includes(query) ??
       item.sellerName?.toLowerCase().includes(query)
     );
   });
