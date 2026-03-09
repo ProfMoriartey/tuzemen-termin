@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "~/components/ui/button";
+import { CalendarDays } from "lucide-react";
 
 export function Navbar() {
   return (
@@ -9,10 +10,10 @@ export function Navbar() {
         href="/"
         className="text-xl font-bold tracking-tight text-slate-900"
       >
-        Tuzemen
+        Tuzemen Termin
       </Link>
 
-      <div>
+      <div className="flex items-center gap-4">
         <Show when="signed-out">
           <SignInButton mode="modal">
             <button className="h-10 cursor-pointer rounded-md bg-[#1a1821] px-4 text-sm font-medium text-white sm:h-8 sm:px-5 sm:text-base">
@@ -21,6 +22,16 @@ export function Navbar() {
           </SignInButton>
         </Show>
         <Show when="signed-in">
+          <Link href="/calendar">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-slate-500 hover:text-blue-600"
+            >
+              <CalendarDays className="h-5 w-5" />
+              <span className="sr-only">Calendar</span>
+            </Button>
+          </Link>
           <UserButton />
         </Show>
       </div>

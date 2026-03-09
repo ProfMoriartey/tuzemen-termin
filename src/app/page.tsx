@@ -21,7 +21,7 @@ export default async function HomePage() {
     <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4">
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-bold text-slate-900">
-          Welcome to Tuzemen
+          Welcome to Tuzemen Termin System
         </h1>
 
         {!userId ? (

@@ -3,9 +3,8 @@
 import { useState, useTransition } from "react";
 import { toggleInquiryFulfillment } from "~/server/actions/workflow";
 import { format } from "date-fns";
-import { Checkbox } from "~/components/ui/checkbox";
 import { Input } from "~/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Loader2, CheckCircle, Circle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -14,6 +13,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { DeleteInquiryButton } from "~/components/seller/delete-inquiry-button";
+import { Button } from "~/components/ui/button";
 
 type SellerInquiry = {
   id: string;
@@ -25,7 +25,7 @@ type SellerInquiry = {
   deadline: Date | null;
   status: string | null;
   newBatchAlert: boolean | null;
-  lastAlertAt: Date | null; // Add this line
+  lastAlertAt: Date | null;
   arrivedQty: number | null;
 };
 
@@ -33,12 +33,15 @@ type SortOption = "fabric" | "seller" | "customer" | "date";
 
 export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
   const [isPending, startTransition] = useTransition();
+  const [pendingId, setPendingId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("fabric");
 
   function handleToggle(inquiryId: string, checked: boolean) {
+    setPendingId(inquiryId);
     startTransition(async () => {
       await toggleInquiryFulfillment(inquiryId, checked);
+      setPendingId(null);
     });
   }
 
@@ -46,9 +49,9 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
-      item.fabricName?.toLowerCase().includes(query) ??
-      item.colorName?.toLowerCase().includes(query) ??
-      item.customerName.toLowerCase().includes(query) ??
+      item.fabricName?.toLowerCase().includes(query) ||
+      item.colorName?.toLowerCase().includes(query) ||
+      item.customerName.toLowerCase().includes(query) ||
       item.sellerName?.toLowerCase().includes(query)
     );
   });
@@ -91,6 +94,7 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
 
   function renderCard(inquiry: SellerInquiry, isArchived: boolean) {
     const isAlertActive = checkAlertStatus(inquiry) && !isArchived;
+    const isThisPending = isPending && pendingId === inquiry.id;
 
     let cardStyle = "bg-white border-slate-200";
     if (isArchived) cardStyle = "bg-slate-50 border-slate-200 opacity-75";
@@ -112,22 +116,27 @@ export function InquiryList({ inquiries }: { inquiries: SellerInquiry[] }) {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center space-x-2 rounded-md border bg-white p-2 shadow-sm">
-              <Checkbox
-                id={`fulfill-${inquiry.id}`}
-                checked={isArchived}
-                onCheckedChange={(checked) =>
-                  handleToggle(inquiry.id, checked as boolean)
-                }
-                disabled={isPending}
-              />
-              <label
-                htmlFor={`fulfill-${inquiry.id}`}
-                className="cursor-pointer text-sm font-bold"
-              >
-                Fulfilled
-              </label>
-            </div>
+            <Button
+              variant={isArchived ? "default" : "outline"}
+              size="sm"
+              onClick={() => handleToggle(inquiry.id, !isArchived)}
+              disabled={isPending}
+              className={
+                isArchived
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "text-slate-600"
+              }
+            >
+              {isThisPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : isArchived ? (
+                <CheckCircle className="mr-2 h-4 w-4" />
+              ) : (
+                <Circle className="mr-2 h-4 w-4" />
+              )}
+              {isArchived ? "Fulfilled" : "Mark Fulfilled"}
+            </Button>
+
             <DeleteInquiryButton inquiryId={inquiry.id} />
           </div>
         </div>

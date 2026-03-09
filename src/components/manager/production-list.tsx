@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { notifyNewBatch } from "~/server/actions/workflow";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { Search, Bell } from "lucide-react";
+import { Search, Bell, Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -69,8 +69,17 @@ function GroupCard({ group }: { group: GroupedData }) {
           disabled={isPending}
           className="bg-blue-600 hover:bg-blue-700"
         >
-          <Bell className="mr-2 h-4 w-4" />
-          {isPending ? "Notifying..." : "New Batch Arrived"}
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Notifying...
+            </>
+          ) : (
+            <>
+              <Bell className="mr-2 h-4 w-4" />
+              New Batch Arrived
+            </>
+          )}
         </Button>
       </div>
 
